@@ -4,20 +4,44 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="4MbK3a_Zt9pyAfJg-caS-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-1" target="4MbK3a_Zt9pyAfJg-caS-8">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="4MbK3a_Zt9pyAfJg-caS-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-1" target="4MbK3a_Zt9pyAfJg-caS-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="130" y="480" />
+              <mxPoint x="130" y="320" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="4MbK3a_Zt9pyAfJg-caS-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-1" target="4MbK3a_Zt9pyAfJg-caS-13">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="4MbK3a_Zt9pyAfJg-caS-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="4MbK3a_Zt9pyAfJg-caS-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70" y="480" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="70" y="481" />
+              <mxPoint x="130" y="481" />
+              <mxPoint x="130" y="415" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="4MbK3a_Zt9pyAfJg-caS-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-1" target="4MbK3a_Zt9pyAfJg-caS-24">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="4MbK3a_Zt9pyAfJg-caS-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="4MbK3a_Zt9pyAfJg-caS-24">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70" y="480" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="70" y="481" />
+              <mxPoint x="130" y="481" />
+              <mxPoint x="130" y="535" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="4MbK3a_Zt9pyAfJg-caS-1" value="Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
-          <mxGeometry x="810" y="90" width="30" height="60" as="geometry" />
+          <mxGeometry x="50" y="440" width="30" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="4MbK3a_Zt9pyAfJg-caS-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-2" target="4MbK3a_Zt9pyAfJg-caS-8">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="4MbK3a_Zt9pyAfJg-caS-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-2" target="4MbK3a_Zt9pyAfJg-caS-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="125" y="100" />
+              <mxPoint x="125" y="290" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="4MbK3a_Zt9pyAfJg-caS-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-2" target="4MbK3a_Zt9pyAfJg-caS-11">
           <mxGeometry relative="1" as="geometry" />
@@ -29,16 +53,16 @@
           <mxGeometry x="60" y="70" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="4MbK3a_Zt9pyAfJg-caS-8" value="Log in" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="540" y="85" width="140" height="70" as="geometry" />
+          <mxGeometry x="160" y="270" width="140" height="70" as="geometry" />
         </mxCell>
         <mxCell id="4MbK3a_Zt9pyAfJg-caS-11" value="Register" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="540" y="10" width="140" height="70" as="geometry" />
+          <mxGeometry x="160" y="65" width="140" height="70" as="geometry" />
         </mxCell>
         <mxCell id="4MbK3a_Zt9pyAfJg-caS-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-13" target="4MbK3a_Zt9pyAfJg-caS-31">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="4MbK3a_Zt9pyAfJg-caS-13" value="Crud movies" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="960" y="10" width="140" height="70" as="geometry" />
+          <mxGeometry x="160" y="380" width="140" height="70" as="geometry" />
         </mxCell>
         <mxCell id="4MbK3a_Zt9pyAfJg-caS-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-15" target="4MbK3a_Zt9pyAfJg-caS-20">
           <mxGeometry relative="1" as="geometry" />
@@ -46,26 +70,26 @@
         <mxCell id="4MbK3a_Zt9pyAfJg-caS-15" value="Select movie from list" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="160" y="180" width="140" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="4MbK3a_Zt9pyAfJg-caS-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-20" target="4MbK3a_Zt9pyAfJg-caS-21">
+        <mxCell id="4MbK3a_Zt9pyAfJg-caS-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-38" target="4MbK3a_Zt9pyAfJg-caS-21">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="4MbK3a_Zt9pyAfJg-caS-20" value="Select Auditorium from list" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="4MbK3a_Zt9pyAfJg-caS-20" value="Select auditorium from list" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="480" y="180" width="140" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="4MbK3a_Zt9pyAfJg-caS-21" value="Reserve free seat from list" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="650" y="180" width="140" height="70" as="geometry" />
+        <mxCell id="4MbK3a_Zt9pyAfJg-caS-21" value="Reserve seat" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="180" width="140" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="4MbK3a_Zt9pyAfJg-caS-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-24" target="4MbK3a_Zt9pyAfJg-caS-26">
+        <mxCell id="4MbK3a_Zt9pyAfJg-caS-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-24" target="4MbK3a_Zt9pyAfJg-caS-34">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="4MbK3a_Zt9pyAfJg-caS-24" value="View movie statistic from list" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="960" y="130" width="140" height="70" as="geometry" />
+          <mxGeometry x="160" y="500" width="140" height="70" as="geometry" />
         </mxCell>
         <mxCell id="4MbK3a_Zt9pyAfJg-caS-26" value="View auditorium statistic from list" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="1140" y="130" width="140" height="70" as="geometry" />
+          <mxGeometry x="490" y="500" width="140" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="4MbK3a_Zt9pyAfJg-caS-28" value="Add/Remove auditorium to movie" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="1280" y="10" width="140" height="70" as="geometry" />
+        <mxCell id="4MbK3a_Zt9pyAfJg-caS-28" value="Add/Remove auditorium to showtime" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="380" width="140" height="70" as="geometry" />
         </mxCell>
         <mxCell id="4MbK3a_Zt9pyAfJg-caS-30" value="Select showtime from list" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="320" y="180" width="140" height="70" as="geometry" />
@@ -74,7 +98,22 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="4MbK3a_Zt9pyAfJg-caS-31" value="Crud showtimes" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="1120" y="10" width="140" height="70" as="geometry" />
+          <mxGeometry x="320" y="380" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="4MbK3a_Zt9pyAfJg-caS-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-34" target="4MbK3a_Zt9pyAfJg-caS-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4MbK3a_Zt9pyAfJg-caS-34" value="View showtime statistic from list" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="500" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="4MbK3a_Zt9pyAfJg-caS-39" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4MbK3a_Zt9pyAfJg-caS-20" target="4MbK3a_Zt9pyAfJg-caS-38">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="620" y="215" as="sourcePoint" />
+            <mxPoint x="820" y="215" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4MbK3a_Zt9pyAfJg-caS-38" value="Select seat from diagram" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="180" width="140" height="70" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
