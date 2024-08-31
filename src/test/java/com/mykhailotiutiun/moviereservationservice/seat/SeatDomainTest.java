@@ -1,7 +1,5 @@
 package com.mykhailotiutiun.moviereservationservice.seat;
 
-import com.mykhailotiutiun.moviereservationservice.auditorium.domain.Auditorium;
-import com.mykhailotiutiun.moviereservationservice.exceptions.ReservationException;
 import com.mykhailotiutiun.moviereservationservice.seat.domain.Seat;
 import com.mykhailotiutiun.moviereservationservice.seat.domain.SeatRepository;
 import com.mykhailotiutiun.moviereservationservice.seat.domain.SeatServiceImpl;
@@ -12,9 +10,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,7 +23,7 @@ public class SeatDomainTest {
     private SeatServiceImpl seatService;
 
     @Test
-    public void getListByShowtimeIdTest(){
+    public void getListByShowtimeIdTest() {
         long showtimeId = 2L;
         Seat seat = Seat.builder().id(1L).build();
         when(seatRepository.findAllByShowtimeId(showtimeId)).thenReturn(List.of(seat));
@@ -34,19 +31,33 @@ public class SeatDomainTest {
     }
 
     @Test
-    public void cloneSeatsToShowtimeTest(){
+    public void getListByUserIdTest() {
+        long userId = 2L;
+        Seat seat = Seat.builder().id(1L).build();
+        when(seatRepository.findAllByUserId(userId)).thenReturn(List.of(seat));
+        assertEquals(List.of(seat), seatService.getListByUserId(userId));
+    }
+
+    @Test
+    public void cloneFromAuditoriumToShowtimeTest() {
         long auditoriumId = 2L;
         long showtimeId = 3L;
         Seat seat = Seat.builder().id(1L).name("1").build();
         when(seatRepository.findAllByAuditoriumId(auditoriumId)).thenReturn(List.of(seat));
-        seatService.cloneSeatsToShowtime(auditoriumId, showtimeId);
-        verify(seatRepository, times(1)).create(any(Seat.class), eq(showtimeId));
+        seatService.cloneFromAuditoriumToShowtime(auditoriumId, showtimeId);
+
+        Seat expectedSeat = Seat.builder()
+                .name(seat.getName())
+                .availability(true)
+                .build();
+        verify(seatRepository, times(1)).create(eq(expectedSeat), eq(auditoriumId), eq(showtimeId));
     }
 
     @Test
-    public void reserveSeat(){
+    public void reserveSeat() {
         long id = 1L;
-        seatService.reserveSeat(id);
-        verify(seatRepository).reserveSeat(id);
+        long userId = 2L;
+        seatService.reserveSeat(id, userId);
+        verify(seatRepository).reserveSeat(id, userId);
     }
 }

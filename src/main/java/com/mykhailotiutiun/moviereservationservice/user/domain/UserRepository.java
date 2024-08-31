@@ -6,6 +6,7 @@ public interface UserRepository {
 
     //Log in
     Optional<User> findByUsername(String username);
+
     //Registration
     User create(User user);
 }

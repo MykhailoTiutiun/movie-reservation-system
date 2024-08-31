@@ -1,8 +1,6 @@
 package com.mykhailotiutiun.moviereservationservice.user;
 
-import com.mykhailotiutiun.moviereservationservice.auditorium.domain.Auditorium;
 import com.mykhailotiutiun.moviereservationservice.exceptions.NotFoundException;
-import com.mykhailotiutiun.moviereservationservice.movie.domain.Movie;
 import com.mykhailotiutiun.moviereservationservice.user.domain.User;
 import com.mykhailotiutiun.moviereservationservice.user.domain.UserRepository;
 import com.mykhailotiutiun.moviereservationservice.user.domain.UserServiceImpl;
@@ -28,7 +26,7 @@ public class UserDomainTest {
     private UserServiceImpl userService;
 
     @Test
-    public void getByUsername(){
+    public void getByUsername() {
         User user = User.builder().id(1L).username("1").build();
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
         assertEquals(user, userService.getByUsername(user.getUsername()));
@@ -38,7 +36,7 @@ public class UserDomainTest {
     }
 
     @Test
-    public void createTest(){
+    public void createTest() {
         User user = User.builder().id(1L).build();
         userService.create(user);
         verify(userRepository).create(user);

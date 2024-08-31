@@ -1,7 +1,6 @@
 package com.mykhailotiutiun.moviereservationservice.seat.domain;
 
-import com.mykhailotiutiun.moviereservationservice.auditorium.domain.Auditorium;
-import com.mykhailotiutiun.moviereservationservice.showtime.domain.Showtime;
+import java.util.Objects;
 
 public class Seat {
 
@@ -42,8 +41,21 @@ public class Seat {
         this.availability = availability;
     }
 
-    public static SeatBuilder builder(){
+    public static SeatBuilder builder() {
         return new SeatBuilder();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Seat seat = (Seat) o;
+        return Objects.equals(id, seat.id) && name.equals(seat.name) && Objects.equals(availability, seat.availability);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, availability);
     }
 
     public static class SeatBuilder {
@@ -68,7 +80,7 @@ public class Seat {
         }
 
 
-        public Seat build(){
+        public Seat build() {
             return new Seat(this);
         }
     }

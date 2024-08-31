@@ -1,6 +1,5 @@
 package com.mykhailotiutiun.moviereservationservice.showtime;
 
-import com.mykhailotiutiun.moviereservationservice.auditorium.domain.Auditorium;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.Showtime;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.ShowtimeRepository;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.ShowtimeServiceImpl;
@@ -25,30 +24,30 @@ public class ShowtimeDomainTest {
     private ShowtimeServiceImpl showtimeService;
 
     @Test
-    public void getListByMovieIdTest(){
-        long movieId = 2L;
+    public void getListByAuditoriumIdTest() {
+        long auditoriumId = 2L;
         Showtime showtime = Showtime.builder().id(1L).build();
-        when(showtimeRepository.findAllByMovieId(movieId)).thenReturn(List.of(showtime));
-        assertEquals(List.of(showtime), showtimeService.getListByMovieId(movieId));
+        when(showtimeRepository.findAllByAuditoriumId(auditoriumId)).thenReturn(List.of(showtime));
+        assertEquals(List.of(showtime), showtimeService.getListByAuditoriumId(auditoriumId));
     }
 
     @Test
-    public void createTest(){
-        long movieId = 2L;
+    public void createTest() {
+        long auditoriumId = 2L;
         Showtime showtime = Showtime.builder().id(1L).build();
-        showtimeService.create(showtime, movieId);
-        verify(showtimeRepository).create(showtime, movieId);
+        showtimeService.create(showtime, auditoriumId);
+        verify(showtimeRepository).create(showtime, auditoriumId);
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         Showtime showtime = Showtime.builder().id(1L).build();
         showtimeService.update(showtime);
         verify(showtimeRepository).update(showtime);
     }
 
     @Test
-    public void deleteByIdTest(){
+    public void deleteByIdTest() {
         long id = 1L;
         showtimeService.deleteById(id);
         verify(showtimeRepository).deleteById(id);

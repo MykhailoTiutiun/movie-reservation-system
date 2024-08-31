@@ -1,4 +1,4 @@
 package com.mykhailotiutiun.moviereservationservice.exceptions;
 
-public class ReservationException extends RuntimeException {
+public class AlreadyExistsException extends RuntimeException {
 }

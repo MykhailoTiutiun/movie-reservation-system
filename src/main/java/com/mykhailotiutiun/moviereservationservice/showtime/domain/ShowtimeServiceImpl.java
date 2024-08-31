@@ -11,13 +11,13 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     }
 
     @Override
-    public List<Showtime> getListByMovieId(Long movieId) {
-        return showtimeRepository.findAllByMovieId(movieId);
+    public List<Showtime> getListByAuditoriumId(Long auditoriumId) {
+        return showtimeRepository.findAllByAuditoriumId(auditoriumId);
     }
 
     @Override
-    public Showtime create(Showtime showtime, Long movieId) {
-        return showtimeRepository.create(showtime, movieId);
+    public Showtime create(Showtime showtime, Long auditoriumId) {
+        return showtimeRepository.create(showtime, auditoriumId);
     }
 
     @Override

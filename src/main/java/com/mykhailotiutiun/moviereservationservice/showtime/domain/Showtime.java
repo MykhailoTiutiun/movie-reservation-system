@@ -1,11 +1,8 @@
 package com.mykhailotiutiun.moviereservationservice.showtime.domain;
 
-import com.mykhailotiutiun.moviereservationservice.auditorium.domain.Auditorium;
-import com.mykhailotiutiun.moviereservationservice.movie.domain.Movie;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Set;
+import java.util.Objects;
 
 public class Showtime {
 
@@ -56,8 +53,21 @@ public class Showtime {
         this.endTime = endTime;
     }
 
-    public static ShowtimeBuilder builder(){
+    public static ShowtimeBuilder builder() {
         return new ShowtimeBuilder();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Showtime showtime = (Showtime) o;
+        return Objects.equals(id, showtime.id) && date.equals(showtime.date) && startTime.equals(showtime.startTime) && endTime.equals(showtime.endTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, startTime, endTime);
     }
 
     public static class ShowtimeBuilder {
@@ -86,7 +96,7 @@ public class Showtime {
             return this;
         }
 
-        public Showtime build(){
+        public Showtime build() {
             return new Showtime(this);
         }
     }

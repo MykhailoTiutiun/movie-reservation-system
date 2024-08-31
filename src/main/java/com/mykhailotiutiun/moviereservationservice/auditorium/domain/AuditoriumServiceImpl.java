@@ -18,7 +18,16 @@ public class AuditoriumServiceImpl implements AuditoriumService {
     }
 
     @Override
-    public List<Auditorium> getListByShowtimeId(Long showtimeId) {
-        return auditoriumRepository.findAllByShowtimeId(showtimeId);
+    public List<Auditorium> getListByMovieId(Long movieId) {
+        return auditoriumRepository.findAllByMovieId(movieId);
+    }
+
+    @Override
+    public void copyToMovie(Long id, Long movieId) {
+        Auditorium auditorium = getById(id);
+        auditoriumRepository.create(Auditorium.builder()
+                .name(auditorium.getName())
+                .description(auditorium.getDescription())
+                .build(), movieId);
     }
 }

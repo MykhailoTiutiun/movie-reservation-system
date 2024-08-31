@@ -1,10 +1,8 @@
 package com.mykhailotiutiun.moviereservationservice.seat.domain;
 
-import com.mykhailotiutiun.moviereservationservice.exceptions.NotFoundException;
-
 import java.util.List;
 
-public class SeatServiceImpl implements SeatService{
+public class SeatServiceImpl implements SeatService {
 
     private final SeatRepository seatRepository;
 
@@ -18,15 +16,20 @@ public class SeatServiceImpl implements SeatService{
     }
 
     @Override
-    public void cloneSeatsToShowtime(Long auditoryId, Long showtimeId) {
-        List<Seat> seats = seatRepository.findAllByAuditoriumId(auditoryId);
-        seats.forEach(seat -> seatRepository.create(Seat.builder()
-                .name(seat.getName())
-                .availability(true).build(), showtimeId));
+    public List<Seat> getListByUserId(Long userId) {
+        return seatRepository.findAllByUserId(userId);
     }
 
     @Override
-    public void reserveSeat(Long id) {
-        seatRepository.reserveSeat(id);
+    public void cloneFromAuditoriumToShowtime(Long auditoriumId, Long showtimeId) {
+        List<Seat> seats = seatRepository.findAllByAuditoriumId(auditoriumId);
+        seats.forEach(seat -> seatRepository.create(Seat.builder()
+                .name(seat.getName())
+                .availability(true).build(), auditoriumId, showtimeId));
+    }
+
+    @Override
+    public void reserveSeat(Long id, Long userId) {
+        seatRepository.reserveSeat(id, userId);
     }
 }

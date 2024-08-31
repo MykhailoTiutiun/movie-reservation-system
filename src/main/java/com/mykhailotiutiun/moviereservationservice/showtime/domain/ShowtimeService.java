@@ -5,11 +5,13 @@ import java.util.List;
 public interface ShowtimeService {
 
     //Select showtime from list
-    List<Showtime> getListByMovieId(Long movieId);
+    List<Showtime> getListByAuditoriumId(Long auditoriumId);
 
     //Crud showtimes
-    Showtime create(Showtime showtime, Long movieId);
+    Showtime create(Showtime showtime, Long auditoriumId);
+
     Showtime update(Showtime showtime);
+
     void deleteById(Long id);
 
 }

@@ -1,5 +1,7 @@
 package com.mykhailotiutiun.moviereservationservice.auditorium.domain;
 
+import java.util.Objects;
+
 public class Auditorium {
 
     private Long id;
@@ -39,8 +41,21 @@ public class Auditorium {
         this.description = description;
     }
 
-    public static AuditoriumBuilder builder(){
+    public static AuditoriumBuilder builder() {
         return new AuditoriumBuilder();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Auditorium that = (Auditorium) o;
+        return Objects.equals(id, that.id) && name.equals(that.name) && description.equals(that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description);
     }
 
     public static class AuditoriumBuilder {
@@ -63,7 +78,7 @@ public class Auditorium {
             return this;
         }
 
-        public Auditorium build(){
+        public Auditorium build() {
             return new Auditorium(this);
         }
     }

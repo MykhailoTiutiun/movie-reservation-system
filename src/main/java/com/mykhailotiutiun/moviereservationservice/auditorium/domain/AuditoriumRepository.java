@@ -6,5 +6,8 @@ import java.util.Optional;
 public interface AuditoriumRepository {
 
     Optional<Auditorium> findById(Long id);
-    List<Auditorium> findAllByShowtimeId(Long showtimeId);
+
+    List<Auditorium> findAllByMovieId(Long movieId);
+
+    Auditorium create(Auditorium auditorium, Long movieId);
 }

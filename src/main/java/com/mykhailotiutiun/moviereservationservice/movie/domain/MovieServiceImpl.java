@@ -4,7 +4,7 @@ import com.mykhailotiutiun.moviereservationservice.exceptions.NotFoundException;
 
 import java.util.List;
 
-public class MovieServiceImpl implements MovieService{
+public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
 

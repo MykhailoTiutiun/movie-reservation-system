@@ -1,5 +1,7 @@
 package com.mykhailotiutiun.moviereservationservice.movie.domain;
 
+import java.util.Objects;
+
 public class Movie {
 
     private Long id;
@@ -39,8 +41,21 @@ public class Movie {
         this.description = description;
     }
 
-    public static MovieBuilder builder(){
+    public static MovieBuilder builder() {
         return new MovieBuilder();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return Objects.equals(id, movie.id) && title.equals(movie.title) && description.equals(movie.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description);
     }
 
     public static class MovieBuilder {
@@ -63,7 +78,7 @@ public class Movie {
             return this;
         }
 
-        public Movie build(){
+        public Movie build() {
             return new Movie(this);
         }
     }
