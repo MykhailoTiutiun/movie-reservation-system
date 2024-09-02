@@ -1,6 +1,6 @@
 package com.mykhailotiutiun.moviereservationservice.user.datasource;
 
-import com.mykhailotiutiun.moviereservationservice.exceptions.AlreadyExistsException;
+import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
 import com.mykhailotiutiun.moviereservationservice.user.domain.User;
 import com.mykhailotiutiun.moviereservationservice.user.domain.UserRepository;
 import org.springframework.dao.DuplicateKeyException;
@@ -35,7 +35,7 @@ public class UserRepositoryImpl implements UserRepository {
         Map<String, Object> params = new HashMap<>();
         params.put("username", user.getUsername());
         params.put("password", user.getPassword());
-        params.put("role", user.getRole().toString());
+        params.put("role", user.getRole().name());
 
         try {
             Long id = (Long) simpleJdbcInsert.executeAndReturnKey(params);

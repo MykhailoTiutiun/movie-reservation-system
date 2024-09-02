@@ -1,6 +1,6 @@
 package com.mykhailotiutiun.moviereservationservice.movie.domain;
 
-import com.mykhailotiutiun.moviereservationservice.exceptions.NotFoundException;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 
 import java.util.List;
 

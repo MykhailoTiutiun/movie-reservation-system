@@ -1,8 +1,8 @@
 package com.mykhailotiutiun.moviereservationservice.seat.datasource;
 
-import com.mykhailotiutiun.moviereservationservice.exceptions.AlreadyExistsException;
-import com.mykhailotiutiun.moviereservationservice.exceptions.NotFoundException;
-import com.mykhailotiutiun.moviereservationservice.exceptions.ReservationException;
+import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
+import com.mykhailotiutiun.moviereservationservice.exception.ReservationException;
 import com.mykhailotiutiun.moviereservationservice.seat.domain.Seat;
 import com.mykhailotiutiun.moviereservationservice.seat.domain.SeatRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,40 +42,44 @@ public class SeatRepositoryImpl implements SeatRepository {
     }
 
     @Override
-    public Seat create(Seat seat, Long auditoriumId, Long showtimeId) {
-        try {
-            jdbcTemplate.queryForObject("SELECT (1) FROM seats WHERE name = ? AND auditorium_id = ? AND showtime_id = ?", Boolean.class,
-                    seat.getName(), auditoriumId, showtimeId);
-            throw new AlreadyExistsException();
-        } catch (EmptyResultDataAccessException ignored) {
-        } catch (IncorrectResultSizeDataAccessException e) {
-            throw new AlreadyExistsException();
-        }
+    public void createAll(List<Seat> seats, Long auditoriumId){
+        jdbcTemplate.batchUpdate("INSERT INTO seats (name, availability, auditorium_id) VALUES (?, ?, ?)",
+                seats,
+                seats.size(),
+                (PreparedStatement ps, Seat seat) -> {
+                    ps.setString(1, seat.getName());
+                    ps.setBoolean(2, seat.getAvailability());
+                    ps.setLong(3, auditoriumId);
+                }
+        );
+    }
 
-        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName("seats").usingGeneratedKeyColumns("id");
-        Map<String, Object> params = new HashMap<>();
-        params.put("name", seat.getName());
-        params.put("availability", seat.getAvailability());
-        params.put("auditorium_id", auditoriumId);
-        params.put("showtime_id", showtimeId);
-
-        Long id = (Long) simpleJdbcInsert.executeAndReturnKey(params);
-        seat.setId(id);
-        return seat;
+    @Override
+    public void createAll(List<Seat> seats, Long auditoriumId, Long showtimeId) {
+        jdbcTemplate.batchUpdate("INSERT INTO seats (name, availability, auditorium_id, showtime_id) VALUES (?, ?, ?, ?)",
+                seats,
+                seats.size(),
+                (PreparedStatement ps, Seat seat) -> {
+            ps.setString(1, seat.getName());
+            ps.setBoolean(2, seat.getAvailability());
+            ps.setLong(3, auditoriumId);
+            ps.setLong(4, showtimeId);
+                }
+        );
     }
 
     @Override
     public void reserveSeat(Long id, Long userId) {
         transactionTemplate.execute(status -> {
             try {
-                if (!Boolean.TRUE.equals(jdbcTemplate.queryForObject("SELECT availability FROM seats WHERE id = ?", Boolean.class, id))) {
+                if (!Boolean.TRUE.equals(jdbcTemplate.queryForObject("SELECT availability FROM seats WHERE id = ? FOR UPDATE ", Boolean.class, id))) {
                     throw new ReservationException();
                 }
             } catch (EmptyResultDataAccessException e) {
                 throw new NotFoundException();
             }
 
-            jdbcTemplate.update("UPDATE seats SET availability = false AND user_id = ? WHERE id = ?", userId, id);
+            jdbcTemplate.update("UPDATE seats SET availability = false, user_id = ? WHERE id = ?", userId, id);
             return null;
         });
     }

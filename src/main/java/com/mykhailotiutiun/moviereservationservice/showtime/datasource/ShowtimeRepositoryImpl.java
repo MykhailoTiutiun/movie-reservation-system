@@ -1,6 +1,6 @@
 package com.mykhailotiutiun.moviereservationservice.showtime.datasource;
 
-import com.mykhailotiutiun.moviereservationservice.exceptions.AlreadyExistsException;
+import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.Showtime;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.ShowtimeRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -49,7 +49,17 @@ public class ShowtimeRepositoryImpl implements ShowtimeRepository {
 
     @Override
     public Showtime update(Showtime showtime) {
-        return null;
+        try {
+            jdbcTemplate.queryForObject("SELECT (1) FROM showtimes WHERE date = ? AND auditorium_id = (SELECT auditorium_id from showtimes WHERE id = ?) AND (end_time > ? AND start_time < ?) AND id != ?", Boolean.class,
+                    showtime.getDate(), showtime.getId(), showtime.getStartTime(), showtime.getEndTime(), showtime.getId());
+            throw new AlreadyExistsException();
+        } catch (EmptyResultDataAccessException ignored) {
+        } catch (IncorrectResultSizeDataAccessException e) {
+            throw new AlreadyExistsException();
+        }
+
+        jdbcTemplate.update("UPDATE showtimes SET date = ?, start_time = ?, end_time = ? WHERE id = ?", showtime.getDate(), showtime.getStartTime(), showtime.getEndTime(), showtime.getId());
+        return showtime;
     }
 
     @Override

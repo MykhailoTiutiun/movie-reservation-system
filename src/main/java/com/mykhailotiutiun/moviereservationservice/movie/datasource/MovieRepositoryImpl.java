@@ -1,6 +1,6 @@
 package com.mykhailotiutiun.moviereservationservice.movie.datasource;
 
-import com.mykhailotiutiun.moviereservationservice.exceptions.AlreadyExistsException;
+import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
 import com.mykhailotiutiun.moviereservationservice.movie.domain.Movie;
 import com.mykhailotiutiun.moviereservationservice.movie.domain.MovieRepository;
 import org.springframework.dao.DuplicateKeyException;
@@ -53,7 +53,7 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Movie update(Movie movie) {
-        jdbcTemplate.update("UPDATE movies SET title = ? AND description = ? WHERE id = ?", movie.getTitle(), movie.getDescription(), movie.getId());
+        jdbcTemplate.update("UPDATE movies SET title = ?, description = ? WHERE id = ?", movie.getTitle(), movie.getDescription(), movie.getId());
         return movie;
     }
 

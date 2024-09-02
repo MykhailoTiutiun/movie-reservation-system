@@ -1,7 +1,7 @@
 package com.mykhailotiutiun.moviereservationservice.user;
 
-import com.mykhailotiutiun.moviereservationservice.exceptions.AlreadyExistsException;
-import com.mykhailotiutiun.moviereservationservice.exceptions.NotFoundException;
+import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 import com.mykhailotiutiun.moviereservationservice.user.datasource.UserMapper;
 import com.mykhailotiutiun.moviereservationservice.user.datasource.UserRepositoryImpl;
 import com.mykhailotiutiun.moviereservationservice.user.domain.User;

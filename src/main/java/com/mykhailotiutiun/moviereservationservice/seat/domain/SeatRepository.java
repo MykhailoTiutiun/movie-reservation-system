@@ -12,7 +12,9 @@ public interface SeatRepository {
     List<Seat> findAllByUserId(Long userId);
 
     // Add/Remove auditorium to showtime
-    Seat create(Seat seat, Long auditoriumId, Long showtimeId);
+    void createAll(List<Seat> seats, Long auditoriumId);
+
+    void createAll(List<Seat> seats, Long auditoriumId, Long showtimeId);
 
     // Reserve free seat from list
     void reserveSeat(Long id, Long userId);
