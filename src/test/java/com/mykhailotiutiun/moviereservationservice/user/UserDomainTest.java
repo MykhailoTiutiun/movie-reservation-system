@@ -1,9 +1,8 @@
 package com.mykhailotiutiun.moviereservationservice.user;
 
-import com.mykhailotiutiun.moviereservationservice.exceptions.NotFoundException;
-import com.mykhailotiutiun.moviereservationservice.user.domain.User;
-import com.mykhailotiutiun.moviereservationservice.user.domain.UserRepository;
-import com.mykhailotiutiun.moviereservationservice.user.domain.UserServiceImpl;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
+import com.mykhailotiutiun.moviereservationservice.exception.PasswordMatchesException;
+import com.mykhailotiutiun.moviereservationservice.user.domain.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,23 +21,35 @@ public class UserDomainTest {
 
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private PasswordEncoder passwordEncoder;
+    @Mock
+    private JwtTokenProvider jwtTokenProvider;
     @InjectMocks
     private UserServiceImpl userService;
 
     @Test
-    public void getByUsername() {
-        User user = User.builder().id(1L).username("1").build();
+    public void getTokenTest() {
+        String expectedToken = "Token";
+        User user = User.builder().id(1L).username("1").password("1").build();
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
-        assertEquals(user, userService.getByUsername(user.getUsername()));
+        when(passwordEncoder.matches(user.getPassword(), user.getPassword())).thenReturn(true);
+        when(jwtTokenProvider.generateToken(user)).thenReturn(expectedToken);
+        assertEquals(expectedToken, userService.getToken(user));
 
-        when(userRepository.findByUsername(user.getUsername())).thenThrow(NotFoundException.class);
-        assertThrows(NotFoundException.class, () -> userService.getByUsername(user.getUsername()));
+        when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> userService.getToken(user));
+
+        when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches(user.getPassword(), user.getPassword())).thenReturn(false);
+        assertThrows(PasswordMatchesException.class, () -> userService.getToken(user));
     }
 
     @Test
     public void createTest() {
-        User user = User.builder().id(1L).build();
-        userService.create(user);
+        User user = User.builder().id(1L).password("toEncode").build();
+        when(passwordEncoder.encode("toEncode")).thenReturn("fromEncode");
+        userService.register(user);
         verify(userRepository).create(user);
     }
 }

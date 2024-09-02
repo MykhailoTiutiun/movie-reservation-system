@@ -3,8 +3,8 @@ package com.mykhailotiutiun.moviereservationservice.user.domain;
 public interface UserService {
 
     //Log in
-    User getByUsername(String username);
+    String getToken(User user);
 
     //Registration
-    User create(User user);
+    User register(User user);
 }

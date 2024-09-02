@@ -1,8 +1,8 @@
 package com.mykhailotiutiun.moviereservationservice.seat;
 
-import com.mykhailotiutiun.moviereservationservice.exceptions.AlreadyExistsException;
-import com.mykhailotiutiun.moviereservationservice.exceptions.NotFoundException;
-import com.mykhailotiutiun.moviereservationservice.exceptions.ReservationException;
+import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
+import com.mykhailotiutiun.moviereservationservice.exception.ReservationException;
 import com.mykhailotiutiun.moviereservationservice.seat.datasource.SeatMapper;
 import com.mykhailotiutiun.moviereservationservice.seat.datasource.SeatRepositoryImpl;
 import com.mykhailotiutiun.moviereservationservice.seat.domain.Seat;

@@ -1,15 +1,17 @@
 package com.mykhailotiutiun.moviereservationservice.auditorium.domain;
 
-import com.mykhailotiutiun.moviereservationservice.exceptions.NotFoundException;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 
 import java.util.List;
 
 public class AuditoriumServiceImpl implements AuditoriumService {
 
     private final AuditoriumRepository auditoriumRepository;
+    private final ToAuditoriumSeatsCloner toAuditoriumSeatsCloner;
 
-    public AuditoriumServiceImpl(AuditoriumRepository auditoriumRepository) {
+    public AuditoriumServiceImpl(AuditoriumRepository auditoriumRepository, ToAuditoriumSeatsCloner toAuditoriumSeatsCloner) {
         this.auditoriumRepository = auditoriumRepository;
+        this.toAuditoriumSeatsCloner = toAuditoriumSeatsCloner;
     }
 
     @Override
@@ -23,11 +25,19 @@ public class AuditoriumServiceImpl implements AuditoriumService {
     }
 
     @Override
-    public void copyToMovie(Long id, Long movieId) {
+    public Auditorium cloneToMovie(Long id, Long movieId) {
         Auditorium auditorium = getById(id);
-        auditoriumRepository.create(Auditorium.builder()
+        Auditorium linkedAuditorium = Auditorium.builder()
                 .name(auditorium.getName())
                 .description(auditorium.getDescription())
-                .build(), movieId);
+                .build();
+        auditoriumRepository.create(linkedAuditorium, movieId);
+        toAuditoriumSeatsCloner.cloneFromAuditoriumToAuditorium(auditorium.getId(), linkedAuditorium.getId());
+        return linkedAuditorium;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        auditoriumRepository.deleteById(id);
     }
 }

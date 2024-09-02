@@ -39,6 +39,21 @@ public class SeatDomainTest {
     }
 
     @Test
+    public void cloneFromAuditoriumToAuditoriumTest() {
+        long fromAuditoriumId = 2L;
+        long toAuditoriumId = 3L;
+        Seat seat = Seat.builder().id(1L).name("1").build();
+        when(seatRepository.findAllByAuditoriumId(fromAuditoriumId)).thenReturn(List.of(seat));
+        seatService.cloneFromAuditoriumToAuditorium(fromAuditoriumId, toAuditoriumId);
+
+        Seat expectedSeat = Seat.builder()
+                .name(seat.getName())
+                .availability(false)
+                .build();
+        verify(seatRepository, times(1)).create(eq(expectedSeat), eq(toAuditoriumId), eq(null));
+    }
+
+    @Test
     public void cloneFromAuditoriumToShowtimeTest() {
         long auditoriumId = 2L;
         long showtimeId = 3L;

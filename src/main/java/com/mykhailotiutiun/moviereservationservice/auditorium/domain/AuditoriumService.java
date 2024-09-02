@@ -8,6 +8,7 @@ public interface AuditoriumService {
     //Select Auditorium from list
     List<Auditorium> getListByMovieId(Long movieId);
 
-    //Crud showtimes
-    void copyToMovie(Long id, Long movieId);
+    //Add/Remove to movie
+    Auditorium cloneToMovie(Long id, Long movieId);
+    void deleteById(Long id);
 }

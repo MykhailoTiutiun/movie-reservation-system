@@ -3,7 +3,8 @@ package com.mykhailotiutiun.moviereservationservice.auditorium;
 import com.mykhailotiutiun.moviereservationservice.auditorium.domain.Auditorium;
 import com.mykhailotiutiun.moviereservationservice.auditorium.domain.AuditoriumRepository;
 import com.mykhailotiutiun.moviereservationservice.auditorium.domain.AuditoriumServiceImpl;
-import com.mykhailotiutiun.moviereservationservice.exceptions.NotFoundException;
+import com.mykhailotiutiun.moviereservationservice.auditorium.domain.ToAuditoriumSeatsCloner;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -24,6 +26,8 @@ public class AuditoriumDomainTest {
 
     @Mock
     private AuditoriumRepository auditoriumRepository;
+    @Mock
+    private ToAuditoriumSeatsCloner toAuditoriumSeatsCloner;
     @InjectMocks
     private AuditoriumServiceImpl auditoriumService;
 
@@ -46,20 +50,28 @@ public class AuditoriumDomainTest {
     }
 
     @Test
-    public void copyToMovieTest() {
+    public void cloneToMovieTest() {
         long movieId = 2L;
         Auditorium auditorium = Auditorium.builder()
                 .id(1L)
                 .name("Test")
                 .description("Test")
                 .build();
-        when(auditoriumRepository.findById(auditorium.getId())).thenReturn(Optional.of(auditorium));
-        auditoriumService.copyToMovie(auditorium.getId(), movieId);
-
         Auditorium expectedAuditorium = Auditorium.builder()
                 .name(auditorium.getName())
                 .description(auditorium.getDescription())
                 .build();
+        when(auditoriumRepository.findById(auditorium.getId())).thenReturn(Optional.of(auditorium));
+        auditoriumService.cloneToMovie(auditorium.getId(), movieId);
+
+        verify(toAuditoriumSeatsCloner).cloneFromAuditoriumToAuditorium(eq(auditorium.getId()), eq(null));
         verify(auditoriumRepository).create(eq(expectedAuditorium), eq(movieId));
+    }
+
+    @Test
+    public void deleteByIdTest() {
+        long id = 1L;
+        auditoriumService.deleteById(id);
+        verify(auditoriumRepository).deleteById(id);
     }
 }

@@ -20,4 +20,4 @@ jobs:
           java-package: jdk
           cache: maven
       - name: Build and test
-        run: mvn clean install
+        run: mvn clean package

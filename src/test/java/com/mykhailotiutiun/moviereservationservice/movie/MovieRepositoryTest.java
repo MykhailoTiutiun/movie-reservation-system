@@ -1,11 +1,12 @@
 package com.mykhailotiutiun.moviereservationservice.movie;
 
-import com.mykhailotiutiun.moviereservationservice.exceptions.AlreadyExistsException;
-import com.mykhailotiutiun.moviereservationservice.exceptions.NotFoundException;
+import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 import com.mykhailotiutiun.moviereservationservice.movie.datasource.MovieMapper;
 import com.mykhailotiutiun.moviereservationservice.movie.datasource.MovieRepositoryImpl;
 import com.mykhailotiutiun.moviereservationservice.movie.domain.Movie;
 import org.junit.jupiter.api.Test;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -63,5 +64,25 @@ public class MovieRepositoryTest {
         assertEquals(expectedMovie, jdbcTemplate.queryForObject("SELECT * FROM movies WHERE id = ?", new MovieMapper(), expectedMovie.getId()));
 
         assertThrows(AlreadyExistsException.class, () -> movieRepository.create(expectedMovie));
+    }
+
+    @Test
+    public void updateTest() {
+        Movie expectedMovie = Movie.builder()
+                .id(12L)
+                .title("updatedTest")
+                .description("updatedTest")
+                .build();
+        assertNotEquals(expectedMovie, jdbcTemplate.queryForObject("SELECT * FROM movies WHERE id = ?", new MovieMapper(), expectedMovie.getId()));
+        movieRepository.update(expectedMovie);
+        assertEquals(expectedMovie, jdbcTemplate.queryForObject("SELECT * FROM movies WHERE id = ?", new MovieMapper(), expectedMovie.getId()));
+    }
+
+    @Test
+    public void deleteByIdTest() {
+        long deleteId = 12L;
+        movieRepository.deleteById(deleteId);
+
+        assertThrows(EmptyResultDataAccessException.class, () -> jdbcTemplate.queryForObject("SELECT * FROM movies WHERE id = ?", new MovieMapper(), deleteId));
     }
 }

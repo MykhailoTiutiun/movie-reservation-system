@@ -1,22 +1,33 @@
 package com.mykhailotiutiun.moviereservationservice.user.domain;
 
-import com.mykhailotiutiun.moviereservationservice.exceptions.NotFoundException;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
+import com.mykhailotiutiun.moviereservationservice.exception.PasswordMatchesException;
 
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
-    public UserServiceImpl(UserRepository userRepository) {
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
-    public User getByUsername(String username) {
-        return userRepository.findByUsername(username).orElseThrow(NotFoundException::new);
+    public String getToken(User user) {
+        User userFromDB = userRepository.findByUsername(user.getUsername()).orElseThrow(NotFoundException::new);
+        if (!passwordEncoder.matches(user.getPassword(), userFromDB.getPassword())){
+            throw new PasswordMatchesException();
+        }
+
+        return jwtTokenProvider.generateToken(userFromDB);
     }
 
     @Override
-    public User create(User user) {
+    public User register(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(UserRole.USER);
         return userRepository.create(user);
     }
 }

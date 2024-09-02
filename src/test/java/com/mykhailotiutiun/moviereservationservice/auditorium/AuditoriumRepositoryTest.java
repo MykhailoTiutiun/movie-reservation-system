@@ -3,9 +3,11 @@ package com.mykhailotiutiun.moviereservationservice.auditorium;
 import com.mykhailotiutiun.moviereservationservice.auditorium.datasource.AuditoriumMapper;
 import com.mykhailotiutiun.moviereservationservice.auditorium.datasource.AuditoriumRepositoryImpl;
 import com.mykhailotiutiun.moviereservationservice.auditorium.domain.Auditorium;
-import com.mykhailotiutiun.moviereservationservice.exceptions.AlreadyExistsException;
-import com.mykhailotiutiun.moviereservationservice.exceptions.NotFoundException;
+import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
+import com.mykhailotiutiun.moviereservationservice.movie.datasource.MovieMapper;
 import org.junit.jupiter.api.Test;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -46,12 +48,20 @@ public class AuditoriumRepositoryTest {
     public void findAllByMovieIdTest() {
         long movieId = 10L;
         long existedId = 10L;
+        long expectedMovieIdNullAuditoriumId = 12L;
         Auditorium expectedAuditorium = Auditorium.builder()
                 .id(existedId)
                 .name("Test")
                 .description("Test")
                 .build();
         assertTrue(auditoriumRepository.findAllByMovieId(movieId).contains(expectedAuditorium));
+
+        Auditorium expectedMovieIdNullAuditorium = Auditorium.builder()
+                .id(expectedMovieIdNullAuditoriumId)
+                .name("MovieIdNullTest")
+                .description("MovieIdNullTest")
+                .build();
+        assertTrue(auditoriumRepository.findAllByMovieId(null).contains(expectedMovieIdNullAuditorium));
     }
 
     @Test
@@ -64,6 +74,15 @@ public class AuditoriumRepositoryTest {
         auditoriumRepository.create(expectedAuditorium, movieId);
         assertEquals(expectedAuditorium, jdbcTemplate.queryForObject("SELECT * FROM auditoriums WHERE id = ?", new AuditoriumMapper(), expectedAuditorium.getId()));
 
+        expectedAuditorium.setId(null);
         assertThrows(AlreadyExistsException.class, () -> auditoriumRepository.create(expectedAuditorium, movieId));
+    }
+
+    @Test
+    public void deleteByIdTest() {
+        long deleteId = 13L;
+        auditoriumRepository.deleteById(deleteId);
+
+        assertThrows(EmptyResultDataAccessException.class, () -> jdbcTemplate.queryForObject("SELECT * FROM auditoriums WHERE id = ?", new MovieMapper(), deleteId));
     }
 }

@@ -1,8 +1,8 @@
 package com.mykhailotiutiun.moviereservationservice.seat.datasource;
 
-import com.mykhailotiutiun.moviereservationservice.exceptions.AlreadyExistsException;
-import com.mykhailotiutiun.moviereservationservice.exceptions.NotFoundException;
-import com.mykhailotiutiun.moviereservationservice.exceptions.ReservationException;
+import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
+import com.mykhailotiutiun.moviereservationservice.exception.ReservationException;
 import com.mykhailotiutiun.moviereservationservice.seat.domain.Seat;
 import com.mykhailotiutiun.moviereservationservice.seat.domain.SeatRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -67,14 +67,14 @@ public class SeatRepositoryImpl implements SeatRepository {
     public void reserveSeat(Long id, Long userId) {
         transactionTemplate.execute(status -> {
             try {
-                if (!Boolean.TRUE.equals(jdbcTemplate.queryForObject("SELECT availability FROM seats WHERE id = ?", Boolean.class, id))) {
+                if (!Boolean.TRUE.equals(jdbcTemplate.queryForObject("SELECT availability FROM seats WHERE id = ? FOR UPDATE ", Boolean.class, id))) {
                     throw new ReservationException();
                 }
             } catch (EmptyResultDataAccessException e) {
                 throw new NotFoundException();
             }
 
-            jdbcTemplate.update("UPDATE seats SET availability = false AND user_id = ? WHERE id = ?", userId, id);
+            jdbcTemplate.update("UPDATE seats SET availability = false, user_id = ? WHERE id = ?", userId, id);
             return null;
         });
     }

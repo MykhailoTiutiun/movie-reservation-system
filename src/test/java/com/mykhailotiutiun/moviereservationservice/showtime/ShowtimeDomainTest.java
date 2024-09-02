@@ -3,6 +3,7 @@ package com.mykhailotiutiun.moviereservationservice.showtime;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.Showtime;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.ShowtimeRepository;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.ShowtimeServiceImpl;
+import com.mykhailotiutiun.moviereservationservice.showtime.domain.ToShowtimeSeatsCloner;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,6 +19,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class ShowtimeDomainTest {
 
+    @Mock
+    private ToShowtimeSeatsCloner showtimeSeatsCloner;
     @Mock
     private ShowtimeRepository showtimeRepository;
     @InjectMocks
@@ -36,6 +39,7 @@ public class ShowtimeDomainTest {
         long auditoriumId = 2L;
         Showtime showtime = Showtime.builder().id(1L).build();
         showtimeService.create(showtime, auditoriumId);
+        verify(showtimeSeatsCloner).cloneFromAuditoriumToShowtime(auditoriumId, showtime.getId());
         verify(showtimeRepository).create(showtime, auditoriumId);
     }
 
