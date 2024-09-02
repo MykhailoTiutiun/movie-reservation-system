@@ -31,16 +31,16 @@ public class UserDomainTest {
     @Test
     public void getTokenTest() {
         String expectedToken = "Token";
-        User user = User.builder().id(1L).username("1").password("1").build();
-        when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
+        User user = User.builder().id(1L).email("1").password("1").build();
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
         when(passwordEncoder.matches(user.getPassword(), user.getPassword())).thenReturn(true);
         when(jwtTokenProvider.generateToken(user)).thenReturn(expectedToken);
         assertEquals(expectedToken, userService.getToken(user));
 
-        when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.empty());
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> userService.getToken(user));
 
-        when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
         when(passwordEncoder.matches(user.getPassword(), user.getPassword())).thenReturn(false);
         assertThrows(PasswordMatchesException.class, () -> userService.getToken(user));
     }

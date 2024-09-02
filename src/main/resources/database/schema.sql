@@ -3,7 +3,7 @@ create table if not exists app_users
     id       bigserial
         constraint app_users_pk
             primary key,
-    username varchar not null
+    email varchar not null
         constraint app_users_pk_2
             unique,
     password varchar not null,
@@ -11,7 +11,7 @@ create table if not exists app_users
 );
 
 create unique index if not exists app_users_username_uindex
-    on app_users (username);
+    on app_users (email);
 
 create table if not exists movies
 (

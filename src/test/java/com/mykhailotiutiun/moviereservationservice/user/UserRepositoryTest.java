@@ -32,22 +32,22 @@ public class UserRepositoryTest {
 
     @Test
     public void findByUsername() {
-        String existedUsername = "Test";
-        String notExistedUsername = "NotExistedTest";
+        String existedEmail = "Test";
+        String notExistedEmail = "NotExistedTest";
         User expectedUser = User.builder()
                 .id(10L)
-                .username("Test")
+                .email("Test")
                 .password("Test")
                 .role(UserRole.USER)
                 .build();
-        assertEquals(expectedUser, userRepository.findByUsername(existedUsername).orElseThrow(NotFoundException::new));
-        assertTrue(userRepository.findByUsername(notExistedUsername).isEmpty());
+        assertEquals(expectedUser, userRepository.findByEmail(existedEmail).orElseThrow(NotFoundException::new));
+        assertTrue(userRepository.findByEmail(notExistedEmail).isEmpty());
     }
 
     @Test
     public void createTest() {
         User expectedUser = User.builder()
-                .username("createdTest")
+                .email("createdTest")
                 .password("createdTest")
                 .role(UserRole.USER)
                 .build();

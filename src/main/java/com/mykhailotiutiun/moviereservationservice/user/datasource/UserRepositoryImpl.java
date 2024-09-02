@@ -21,9 +21,9 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findByUsername(String username) {
+    public Optional<User> findByEmail(String username) {
         try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT * FROM app_users WHERE username = ?", new UserMapper(), username));
+            return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT * FROM app_users WHERE email = ?", new UserMapper(), username));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
@@ -33,7 +33,7 @@ public class UserRepositoryImpl implements UserRepository {
     public User create(User user) {
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName("app_users").usingGeneratedKeyColumns("id");
         Map<String, Object> params = new HashMap<>();
-        params.put("username", user.getUsername());
+        params.put("email", user.getEmail());
         params.put("password", user.getPassword());
         params.put("role", user.getRole().name());
 

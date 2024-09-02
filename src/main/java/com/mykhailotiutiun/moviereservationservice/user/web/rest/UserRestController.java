@@ -25,7 +25,7 @@ public class UserRestController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest registerRequest){
         User user = User.builder()
-                .username(registerRequest.username())
+                .email(registerRequest.email())
                 .password(registerRequest.password())
                 .build();
         userService.register(user);
@@ -35,7 +35,7 @@ public class UserRestController {
     @PostMapping("/request-token")
     public ResponseEntity<TokenResponse> requestToken(@RequestBody @Valid TokenRequest tokenRequest){
         User user = User.builder()
-                .username(tokenRequest.username())
+                .email(tokenRequest.email())
                 .password(tokenRequest.password())
                 .build();
         TokenResponse tokenResponse = new TokenResponse(userService.getToken(user));

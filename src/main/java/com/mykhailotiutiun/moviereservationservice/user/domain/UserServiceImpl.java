@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getToken(User user) {
-        User userFromDB = userRepository.findByUsername(user.getUsername()).orElseThrow(NotFoundException::new);
+        User userFromDB = userRepository.findByEmail(user.getEmail()).orElseThrow(NotFoundException::new);
         if (!passwordEncoder.matches(user.getPassword(), userFromDB.getPassword())){
             throw new PasswordMatchesException();
         }

@@ -9,7 +9,7 @@ FROM movies;
 DELETE
 FROM app_users;
 
-INSERT INTO app_users(id, username, password, role)
+INSERT INTO app_users(id, email, password, role)
 VALUES (10, 'Test', 'Test', 'USER');
 INSERT INTO movies(id, title, description)
 VALUES (10, 'Test', 'Test');

@@ -5,7 +5,7 @@ import java.util.Objects;
 public class User {
 
     private Long id;
-    private String username;
+    private String email;
     private String password;
     private UserRole role;
 
@@ -14,7 +14,7 @@ public class User {
 
     private User(UserBuilder builder) {
         this.id = builder.id;
-        this.username = builder.username;
+        this.email = builder.email;
         this.password = builder.password;
         this.role = builder.role;
     }
@@ -27,12 +27,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -60,17 +60,17 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && username.equals(user.username) && password.equals(user.password) && role == user.role;
+        return Objects.equals(id, user.id) && email.equals(user.email) && password.equals(user.password) && role == user.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, role);
+        return Objects.hash(id, email, password, role);
     }
 
     public static class UserBuilder {
         private Long id;
-        private String username;
+        private String email;
         private String password;
         private UserRole role;
 
@@ -79,8 +79,8 @@ public class User {
             return this;
         }
 
-        public UserBuilder username(String username) {
-            this.username = username;
+        public UserBuilder email(String email) {
+            this.email = email;
             return this;
         }
 
