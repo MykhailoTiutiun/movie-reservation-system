@@ -1,9 +1,6 @@
 package com.mykhailotiutiun.moviereservationservice.exceptionhandler;
 
-import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
-import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
-import com.mykhailotiutiun.moviereservationservice.exception.PasswordMatchesException;
-import com.mykhailotiutiun.moviereservationservice.exception.ReservationException;
+import com.mykhailotiutiun.moviereservationservice.exception.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,5 +30,10 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler(value = PasswordMatchesException.class)
     protected ResponseEntity<Object> handlePasswordMatchesException(PasswordMatchesException e, WebRequest request){
         return handleExceptionInternal(e, "Passwords doesn't match", new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
+    }
+
+    @ExceptionHandler(value = InvalidDeletionException.class)
+    protected ResponseEntity<Object> handleInvalidDeletionException(InvalidDeletionException e, WebRequest request){
+        return handleExceptionInternal(e, "Invalid deletion", new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 }

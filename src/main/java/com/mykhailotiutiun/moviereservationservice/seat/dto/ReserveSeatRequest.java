@@ -1,4 +1,7 @@
 package com.mykhailotiutiun.moviereservationservice.seat.dto;
 
-public record ReserveSeatRequest(Long seatId, Long userId) {
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
+public record ReserveSeatRequest(@NotNull @Min(1) Long seatId, @NotNull @Min(1) Long userId) {
 }

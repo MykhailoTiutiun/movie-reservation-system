@@ -15,6 +15,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SeatRepositoryTest {
@@ -69,7 +71,7 @@ public class SeatRepositoryTest {
     }
 
     @Test
-    public void createTest() {
+    public void createAllTest() {
         long auditoriumId = 10L;
         long showtimeId = 10L;
 
@@ -77,10 +79,13 @@ public class SeatRepositoryTest {
                 .name("createdTest")
                 .availability(true)
                 .build();
-        seatRepository.create(expectedSeat, auditoriumId, showtimeId);
-        assertEquals(expectedSeat, jdbcTemplate.queryForObject("SELECT * FROM seats WHERE id = ?", new SeatMapper(), expectedSeat.getId()));
+        seatRepository.createAll(List.of(expectedSeat), auditoriumId, showtimeId);
+        seatRepository.createAll(List.of(expectedSeat), auditoriumId);
+        expectedSeat.setId(1L);
+        assertEquals(expectedSeat, jdbcTemplate.queryForObject("SELECT * FROM seats WHERE id = 1", new SeatMapper()));
+        expectedSeat.setId(2L);
+        assertEquals(expectedSeat, jdbcTemplate.queryForObject("SELECT * FROM seats WHERE id = 2", new SeatMapper()));
 
-        assertThrows(AlreadyExistsException.class, () -> seatRepository.create(expectedSeat, auditoriumId, showtimeId));
     }
 
     @Test

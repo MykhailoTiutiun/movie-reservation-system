@@ -1,5 +1,6 @@
 package com.mykhailotiutiun.moviereservationservice.auditorium.domain;
 
+import com.mykhailotiutiun.moviereservationservice.exception.InvalidDeletionException;
 import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 
 import java.util.List;
@@ -38,6 +39,9 @@ public class AuditoriumServiceImpl implements AuditoriumService {
 
     @Override
     public void deleteById(Long id) {
+        if(id <= 3){
+            throw new InvalidDeletionException();
+        }
         auditoriumRepository.deleteById(id);
     }
 }

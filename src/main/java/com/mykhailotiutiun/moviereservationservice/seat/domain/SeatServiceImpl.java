@@ -23,17 +23,20 @@ public class SeatServiceImpl implements SeatService {
     @Override
     public void cloneFromAuditoriumToAuditorium(Long fromAuditoriumId, Long toAuditoriumId) {
         List<Seat> seats = seatRepository.findAllByAuditoriumId(fromAuditoriumId);
-        seats.forEach(seat -> seatRepository.create(Seat.builder()
+        List<Seat> newSeats = seats.stream().map(seat -> Seat.builder()
                 .name(seat.getName())
-                .availability(false).build(), toAuditoriumId, null));
+                .availability(false).build()).toList();
+
+        seatRepository.createAll(newSeats, toAuditoriumId);
     }
 
     @Override
     public void cloneFromAuditoriumToShowtime(Long auditoriumId, Long showtimeId) {
         List<Seat> seats = seatRepository.findAllByAuditoriumId(auditoriumId);
-        seats.forEach(seat -> seatRepository.create(Seat.builder()
+        List<Seat> newSeats = seats.stream().map(seat -> Seat.builder()
                 .name(seat.getName())
-                .availability(true).build(), auditoriumId, showtimeId));
+                .availability(true).build()).toList();
+        seatRepository.createAll(newSeats, auditoriumId, showtimeId);
     }
 
     @Override

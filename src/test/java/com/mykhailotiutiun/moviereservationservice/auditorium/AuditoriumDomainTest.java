@@ -4,6 +4,7 @@ import com.mykhailotiutiun.moviereservationservice.auditorium.domain.Auditorium;
 import com.mykhailotiutiun.moviereservationservice.auditorium.domain.AuditoriumRepository;
 import com.mykhailotiutiun.moviereservationservice.auditorium.domain.AuditoriumServiceImpl;
 import com.mykhailotiutiun.moviereservationservice.auditorium.domain.ToAuditoriumSeatsCloner;
+import com.mykhailotiutiun.moviereservationservice.exception.InvalidDeletionException;
 import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,8 +71,11 @@ public class AuditoriumDomainTest {
 
     @Test
     public void deleteByIdTest() {
-        long id = 1L;
+        long id = 4L;
+        long invalidId = 2L;
         auditoriumService.deleteById(id);
         verify(auditoriumRepository).deleteById(id);
+
+        assertThrows(InvalidDeletionException.class, () -> auditoriumService.deleteById(invalidId));
     }
 }

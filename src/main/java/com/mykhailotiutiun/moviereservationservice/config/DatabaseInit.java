@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.util.Objects;
 
 @Configuration
 public class DatabaseInit {
@@ -18,7 +19,9 @@ public class DatabaseInit {
     @PostConstruct
     private void initSeats() {
         int seatId = 1;
-
+        if(Objects.equals(jdbcTemplate.queryForObject("SELECT COUNT(*) FROM seats WHERE auditorium_id BETWEEN 1 and 3", Integer.class), 692)){
+            return;
+        }
 
         // Imax
         // Rows A-F (36 seats each)

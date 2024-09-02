@@ -50,7 +50,7 @@ public class SeatDomainTest {
                 .name(seat.getName())
                 .availability(false)
                 .build();
-        verify(seatRepository, times(1)).create(eq(expectedSeat), eq(toAuditoriumId), eq(null));
+        verify(seatRepository).createAll(eq(List.of(expectedSeat)), eq(toAuditoriumId));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class SeatDomainTest {
                 .name(seat.getName())
                 .availability(true)
                 .build();
-        verify(seatRepository, times(1)).create(eq(expectedSeat), eq(auditoriumId), eq(showtimeId));
+        verify(seatRepository, times(1)).createAll(eq(List.of(expectedSeat)), eq(auditoriumId), eq(showtimeId));
     }
 
     @Test
