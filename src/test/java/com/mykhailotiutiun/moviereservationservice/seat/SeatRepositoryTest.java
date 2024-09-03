@@ -1,6 +1,5 @@
 package com.mykhailotiutiun.moviereservationservice.seat;
 
-import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
 import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 import com.mykhailotiutiun.moviereservationservice.exception.ReservationException;
 import com.mykhailotiutiun.moviereservationservice.seat.datasource.SeatMapper;
@@ -14,7 +13,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
-
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

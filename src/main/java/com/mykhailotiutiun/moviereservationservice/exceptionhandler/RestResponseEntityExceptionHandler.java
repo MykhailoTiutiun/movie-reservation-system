@@ -32,6 +32,11 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(e, "Passwords doesn't match", new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
     }
 
+    @ExceptionHandler(value = UnverifiedEmailException.class)
+    protected ResponseEntity<Object> handleUnverifiedEmailException(UnverifiedEmailException e, WebRequest request){
+        return handleExceptionInternal(e, "User is unverified", new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
+    }
+
     @ExceptionHandler(value = InvalidDeletionException.class)
     protected ResponseEntity<Object> handleInvalidDeletionException(InvalidDeletionException e, WebRequest request){
         return handleExceptionInternal(e, "Invalid deletion", new HttpHeaders(), HttpStatus.CONFLICT, request);

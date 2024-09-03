@@ -7,10 +7,16 @@ FROM auditoriums;
 DELETE
 FROM movies;
 DELETE
+FROM user_verification_tokens;
+DELETE
 FROM app_users;
 
-INSERT INTO app_users(id, username, password, role)
-VALUES (10, 'Test', 'Test', 'USER');
+INSERT INTO app_users(id, email, password, verified, role)
+VALUES (10, 'Test', 'Test', false, 'USER');
+INSERT INTO app_users(id, email, password, verified, role)
+VALUES (12, 'VerifyTest', 'VerifyTest', false, 'USER');
+INSERT INTO user_verification_tokens(id, token, user_id)
+VALUES (10, 'Test', 10);
 INSERT INTO movies(id, title, description)
 VALUES (10, 'Test', 'Test');
 INSERT INTO movies(id, title, description)

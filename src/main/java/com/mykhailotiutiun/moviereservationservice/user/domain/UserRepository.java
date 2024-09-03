@@ -5,8 +5,9 @@ import java.util.Optional;
 public interface UserRepository {
 
     //Log in
-    Optional<User> findByUsername(String username);
+    Optional<User> findByEmail(String username);
 
     //Registration
     User create(User user);
+    void verifyUser(Long userId);
 }

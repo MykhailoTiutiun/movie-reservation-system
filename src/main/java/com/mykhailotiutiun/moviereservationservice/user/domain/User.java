@@ -5,8 +5,9 @@ import java.util.Objects;
 public class User {
 
     private Long id;
-    private String username;
+    private String email;
     private String password;
+    private Boolean verified;
     private UserRole role;
 
     public User() {
@@ -14,8 +15,9 @@ public class User {
 
     private User(UserBuilder builder) {
         this.id = builder.id;
-        this.username = builder.username;
+        this.email = builder.email;
         this.password = builder.password;
+        this.verified = builder.verified;
         this.role = builder.role;
     }
 
@@ -27,12 +29,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -41,6 +43,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public Boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(Boolean verified) {
+        this.verified = verified;
     }
 
     public UserRole getRole() {
@@ -60,18 +69,19 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && username.equals(user.username) && password.equals(user.password) && role == user.role;
+        return Objects.equals(id, user.id) && email.equals(user.email) && password.equals(user.password) && verified.equals(user.verified) && role == user.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, role);
+        return Objects.hash(id, email, password, verified, role);
     }
 
     public static class UserBuilder {
         private Long id;
-        private String username;
+        private String email;
         private String password;
+        private Boolean verified;
         private UserRole role;
 
         public UserBuilder id(Long id) {
@@ -79,13 +89,18 @@ public class User {
             return this;
         }
 
-        public UserBuilder username(String username) {
-            this.username = username;
+        public UserBuilder email(String email) {
+            this.email = email;
             return this;
         }
 
         public UserBuilder password(String password) {
             this.password = password;
+            return this;
+        }
+
+        public UserBuilder verified(Boolean enabled){
+            this.verified = enabled;
             return this;
         }
 
