@@ -1,3 +1,7 @@
+INSERT INTO app_users(id, username, password, role)
+SELECT 1, 'admin', '$2a$10$ghZumU0QobI94T62q.39COR5baJ00fyr8zId9he5TRqF.N0nq8dK2', 'ADMIN'
+WHERE NOT EXISTS (SELECT  1 FROM app_users WHERE id = 1);
+
 INSERT INTO auditoriums(id, name, description, movie_id)
 SELECT 1, 'IMAX', 'Large format screen with high-resolution visuals and enhanced sound', NULL
 WHERE NOT EXISTS (SELECT 1 FROM auditoriums WHERE id = 1);
