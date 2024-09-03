@@ -7,6 +7,7 @@ public class User {
     private Long id;
     private String email;
     private String password;
+    private Boolean verified;
     private UserRole role;
 
     public User() {
@@ -16,6 +17,7 @@ public class User {
         this.id = builder.id;
         this.email = builder.email;
         this.password = builder.password;
+        this.verified = builder.verified;
         this.role = builder.role;
     }
 
@@ -42,6 +44,13 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+    public Boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(Boolean verified) {
+        this.verified = verified;
+    }
 
     public UserRole getRole() {
         return role;
@@ -60,18 +69,19 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && email.equals(user.email) && password.equals(user.password) && role == user.role;
+        return Objects.equals(id, user.id) && email.equals(user.email) && password.equals(user.password) && verified.equals(user.verified) && role == user.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, role);
+        return Objects.hash(id, email, password, verified, role);
     }
 
     public static class UserBuilder {
         private Long id;
         private String email;
         private String password;
+        private Boolean verified;
         private UserRole role;
 
         public UserBuilder id(Long id) {
@@ -86,6 +96,11 @@ public class User {
 
         public UserBuilder password(String password) {
             this.password = password;
+            return this;
+        }
+
+        public UserBuilder verified(Boolean enabled){
+            this.verified = enabled;
             return this;
         }
 

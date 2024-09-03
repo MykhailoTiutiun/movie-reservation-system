@@ -38,6 +38,7 @@ public class UserRepositoryTest {
                 .id(10L)
                 .email("Test")
                 .password("Test")
+                .verified(false)
                 .role(UserRole.USER)
                 .build();
         assertEquals(expectedUser, userRepository.findByEmail(existedEmail).orElseThrow(NotFoundException::new));
@@ -49,12 +50,29 @@ public class UserRepositoryTest {
         User expectedUser = User.builder()
                 .email("createdTest")
                 .password("createdTest")
+                .verified(false)
                 .role(UserRole.USER)
                 .build();
         userRepository.create(expectedUser);
         assertEquals(expectedUser, jdbcTemplate.queryForObject("SELECT * FROM app_users WHERE id = ?", new UserMapper(), expectedUser.getId()));
 
         assertThrows(AlreadyExistsException.class, () -> userRepository.create(expectedUser));
+    }
+
+    @Test
+    public void verifyTest() {
+        long notExistedId = 11L;
+        User expectedUser = User.builder()
+                .id(12L)
+                .email("VerifyTest")
+                .password("VerifyTest")
+                .verified(true)
+                .role(UserRole.USER)
+                .build();
+        userRepository.verifyUser(expectedUser.getId());
+        assertEquals(expectedUser, jdbcTemplate.queryForObject("SELECT * FROM app_users WHERE id = ?", new UserMapper(), expectedUser.getId()));
+
+        assertThrows(NotFoundException.class, () -> userRepository.verifyUser(notExistedId));
     }
 
 }

@@ -7,6 +7,7 @@ create table if not exists app_users
         constraint app_users_pk_2
             unique,
     password varchar not null,
+    verified boolean not null,
     role     varchar
 );
 
@@ -81,3 +82,19 @@ create table if not exists seats
         references app_users
             on delete set null
 );
+
+create table if not exists user_verification_tokens
+(
+    id      bigserial
+        constraint user_verification_tokens_pk
+            primary key,
+    token   varchar not null,
+    user_id bigint  not null
+        references app_users
+            on delete cascade
+);
+
+create unique index if not exists user_verification_tokens_token_uindex
+    on user_verification_tokens (token);
+
+

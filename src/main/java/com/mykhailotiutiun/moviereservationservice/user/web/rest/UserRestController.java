@@ -8,10 +8,7 @@ import com.mykhailotiutiun.moviereservationservice.user.dto.TokenResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/users")
@@ -40,5 +37,11 @@ public class UserRestController {
                 .build();
         TokenResponse tokenResponse = new TokenResponse(userService.getToken(user));
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/verify")
+    public ResponseEntity<?> verify(@RequestParam(name = "token") String token) {
+        userService.verify(token);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

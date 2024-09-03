@@ -1,20 +1,15 @@
 package com.mykhailotiutiun.moviereservationservice.seat.datasource;
 
-import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
 import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 import com.mykhailotiutiun.moviereservationservice.exception.ReservationException;
 import com.mykhailotiutiun.moviereservationservice.seat.domain.Seat;
 import com.mykhailotiutiun.moviereservationservice.seat.domain.SeatRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.sql.PreparedStatement;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SeatRepositoryImpl implements SeatRepository {
 

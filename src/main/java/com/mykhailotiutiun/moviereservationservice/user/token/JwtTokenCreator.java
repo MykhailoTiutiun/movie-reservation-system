@@ -1,4 +1,4 @@
-package com.mykhailotiutiun.moviereservationservice.user.jwt;
+package com.mykhailotiutiun.moviereservationservice.user.token;
 
 import com.mykhailotiutiun.moviereservationservice.user.domain.JwtTokenProvider;
 import com.mykhailotiutiun.moviereservationservice.user.domain.User;

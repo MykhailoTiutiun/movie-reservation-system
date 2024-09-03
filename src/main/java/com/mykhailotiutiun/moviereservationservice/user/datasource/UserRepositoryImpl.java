@@ -1,6 +1,7 @@
 package com.mykhailotiutiun.moviereservationservice.user.datasource;
 
 import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 import com.mykhailotiutiun.moviereservationservice.user.domain.User;
 import com.mykhailotiutiun.moviereservationservice.user.domain.UserRepository;
 import org.springframework.dao.DuplicateKeyException;
@@ -35,6 +36,7 @@ public class UserRepositoryImpl implements UserRepository {
         Map<String, Object> params = new HashMap<>();
         params.put("email", user.getEmail());
         params.put("password", user.getPassword());
+        params.put("verified", user.isVerified());
         params.put("role", user.getRole().name());
 
         try {
@@ -46,4 +48,11 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    @Override
+    public void verifyUser(Long userId) {
+        int result = jdbcTemplate.update("UPDATE app_users SET verified = true WHERE id = ?", userId);
+        if (result == 0) {
+            throw new NotFoundException();
+        }
+    }
 }

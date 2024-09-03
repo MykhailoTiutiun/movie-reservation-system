@@ -1,4 +1,4 @@
 package com.mykhailotiutiun.moviereservationservice.exception;
 
-public class PasswordMatchesException extends AuthException {
+public class UnverifiedEmailException extends AuthException{
 }

@@ -14,6 +14,7 @@ public class UserMapper implements RowMapper<User> {
                 .id(rs.getLong("id"))
                 .email(rs.getString("email"))
                 .password(rs.getString("password"))
+                .verified(rs.getBoolean("verified"))
                 .role(UserRole.valueOf(rs.getString("role")))
                 .build();
     }

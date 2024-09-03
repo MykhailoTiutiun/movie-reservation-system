@@ -7,4 +7,5 @@ public interface UserService {
 
     //Registration
     User register(User user);
+    void verify(String verificationToken);
 }

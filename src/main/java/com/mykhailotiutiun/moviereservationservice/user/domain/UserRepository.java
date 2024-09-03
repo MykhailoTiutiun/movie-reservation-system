@@ -9,4 +9,5 @@ public interface UserRepository {
 
     //Registration
     User create(User user);
+    void verifyUser(Long userId);
 }
