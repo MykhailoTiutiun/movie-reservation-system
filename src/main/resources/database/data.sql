@@ -1,5 +1,13 @@
-INSERT INTO app_users(id, username, password, role)
-SELECT 1, 'admin', '$2a$10$ghZumU0QobI94T62q.39COR5baJ00fyr8zId9he5TRqF.N0nq8dK2', 'ADMIN'
+INSERT INTO user_roles(id, name)
+SELECT 1, 'USER'
+WHERE NOT EXISTS(SELECT 1 FROM user_roles where id = 1);
+
+INSERT INTO user_roles(id, name)
+SELECT 2, 'ADMIN'
+WHERE NOT EXISTS(SELECT 1 FROM user_roles where id = 2);
+
+INSERT INTO app_users(id, email, password, verified, role_id)
+SELECT 1, 'admin', '$2a$10$ghZumU0QobI94T62q.39COR5baJ00fyr8zId9he5TRqF.N0nq8dK2', true, 2
 WHERE NOT EXISTS (SELECT  1 FROM app_users WHERE id = 1);
 
 INSERT INTO auditoriums(id, name, description, movie_id)

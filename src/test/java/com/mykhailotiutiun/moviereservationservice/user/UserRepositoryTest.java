@@ -54,7 +54,7 @@ public class UserRepositoryTest {
                 .role(UserRole.USER)
                 .build();
         userRepository.create(expectedUser);
-        assertEquals(expectedUser, jdbcTemplate.queryForObject("SELECT * FROM app_users WHERE id = ?", new UserMapper(), expectedUser.getId()));
+        assertEquals(expectedUser, jdbcTemplate.queryForObject("SELECT app_users.id as id, email, password, verified, user_roles.name as role FROM app_users LEFT JOIN user_roles on role_id = user_roles.id WHERE app_users.id = ?", new UserMapper(), expectedUser.getId()));
 
         assertThrows(AlreadyExistsException.class, () -> userRepository.create(expectedUser));
     }
@@ -70,7 +70,7 @@ public class UserRepositoryTest {
                 .role(UserRole.USER)
                 .build();
         userRepository.verifyUser(expectedUser.getId());
-        assertEquals(expectedUser, jdbcTemplate.queryForObject("SELECT * FROM app_users WHERE id = ?", new UserMapper(), expectedUser.getId()));
+        assertEquals(expectedUser, jdbcTemplate.queryForObject("SELECT app_users.id as id, email, password, verified, user_roles.name as role FROM app_users LEFT JOIN user_roles on role_id = user_roles.id WHERE app_users.id = ?", new UserMapper(), expectedUser.getId()));
 
         assertThrows(NotFoundException.class, () -> userRepository.verifyUser(notExistedId));
     }
