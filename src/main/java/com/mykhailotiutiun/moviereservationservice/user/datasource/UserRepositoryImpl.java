@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> findByEmail(String username) {
         try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT * FROM app_users WHERE email = ?", new UserMapper(), username));
+            return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT app_users.id as id, email, password, verified, user_roles.name as role FROM app_users LEFT JOIN user_roles on role_id = user_roles.id WHERE email = ?", new UserMapper(), username));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
@@ -37,15 +37,15 @@ public class UserRepositoryImpl implements UserRepository {
         params.put("email", user.getEmail());
         params.put("password", user.getPassword());
         params.put("verified", user.isVerified());
-        params.put("role", user.getRole().name());
-
         try {
             Long id = (Long) simpleJdbcInsert.executeAndReturnKey(params);
             user.setId(id);
-            return user;
         } catch (DuplicateKeyException e) {
             throw new AlreadyExistsException();
         }
+        jdbcTemplate.update("UPDATE app_users SET role_id = (SELECT id FROM user_roles WHERE name = ?) WHERE id = ?", user.getRole().name(), user.getId());
+
+        return user;
     }
 
     @Override

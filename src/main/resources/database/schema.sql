@@ -1,3 +1,14 @@
+create table if not exists user_roles
+(
+    id   bigint  not null
+        constraint user_roles_pk
+            primary key,
+    name varchar not null
+);
+
+create unique index if not exists user_roles_name_uindex
+    on user_roles (name);
+
 create table if not exists app_users
 (
     id       bigserial
@@ -8,7 +19,7 @@ create table if not exists app_users
             unique,
     password varchar not null,
     verified boolean not null,
-    role     varchar
+    role_id bigint references user_roles
 );
 
 create unique index if not exists app_users_username_uindex
@@ -39,19 +50,6 @@ create table if not exists auditoriums
         references movies
             on delete cascade
 );
-
-INSERT INTO auditoriums(id, name, description, movie_id)
-SELECT 1, 'IMAX', 'Large format screen with high-resolution visuals and enhanced sound', NULL
-WHERE NOT EXISTS(SELECT 1 FROM auditoriums WHERE id = 1);
-
-INSERT INTO auditoriums(id, name, description, movie_id)
-SELECT 2, '4DX', 'Immersive experience with motion seats and environmental effects', NULL
-WHERE NOT EXISTS(SELECT 1 FROM auditoriums WHERE id = 2);
-
-INSERT INTO auditoriums(id, name, description, movie_id)
-SELECT 3, '3D', 'Three-dimensional projection for a depth-filled viewing experience', NULL
-WHERE NOT EXISTS(SELECT 1 FROM auditoriums WHERE id = 3);
-
 
 create table if not exists showtimes
 (

@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getToken(User user) {
         User userFromDB = userRepository.findByEmail(user.getEmail()).orElseThrow(NotFoundException::new);
-        if(!user.isVerified()){
+        if(!userFromDB.isVerified()){
             throw new UnverifiedEmailException();
         }
         if (!passwordEncoder.matches(user.getPassword(), userFromDB.getPassword())){
