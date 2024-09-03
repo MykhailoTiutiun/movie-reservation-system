@@ -1,0 +1,41 @@
+version: "3.3"
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: movie-reservation-system
+      POSTGRES_USER: "movie-reservation-system"
+      POSTGRES_PASSWORD: ""
+    volumes:
+      - movie-reservation-system-db:/var/lib/postgresql/data
+    networks:
+      - local
+
+  app:
+    container_name: app
+    image: mykhailotiutiun/movie-reservation-system:0.0.1
+    ports:
+      - "8080:8080"
+    environment:
+      DATASOURCE_URL: "jdbc:postgresql://postgres:5432/movie-reservation-system"
+      DATASOURCE_USER: "movie-reservation-system"
+      DATASOURCE_PASSWORD: ""
+      JWT_TOKEN: ""
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 300M
+    networks:
+      - local
+
+networks:
+  local:
+    driver: bridge
+
+volumes:
+  movie-reservation-system-db:
