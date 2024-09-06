@@ -3,6 +3,7 @@ package com.mykhailotiutiun.moviereservationservice.movie.web.rest;
 import com.mykhailotiutiun.moviereservationservice.movie.domain.Movie;
 import com.mykhailotiutiun.moviereservationservice.movie.domain.MovieService;
 import com.mykhailotiutiun.moviereservationservice.movie.dto.CreateMovieRequest;
+import com.mykhailotiutiun.moviereservationservice.movie.dto.GenreToMovieRequest;
 import com.mykhailotiutiun.moviereservationservice.movie.dto.UpdateMovieRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -43,6 +44,18 @@ public class MovieRestController {
                 .description(updateMovieRequest.description())
                 .build();
         return new ResponseEntity<>(movieService.update(movie), HttpStatus.OK);
+    }
+
+    @PostMapping("/addGenre")
+    public ResponseEntity<?> addGenre(@RequestBody @Valid GenreToMovieRequest genreToMovieRequest){
+        movieService.addGenre(genreToMovieRequest.movieId(), genreToMovieRequest.genreId());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/removeGenre")
+    public ResponseEntity<?> removeGenre(@RequestBody @Valid GenreToMovieRequest genreToMovieRequest){
+        movieService.removeGenre(genreToMovieRequest.movieId(), genreToMovieRequest.genreId());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{id}")

@@ -1,5 +1,7 @@
 package com.mykhailotiutiun.moviereservationservice.movie.domain;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Movie {
@@ -7,6 +9,7 @@ public class Movie {
     private Long id;
     private String title;
     private String description;
+    private Map<Long, String> genres = new HashMap<>();
 
     public Movie() {
     }
@@ -15,6 +18,7 @@ public class Movie {
         this.id = builder.id;
         this.title = builder.title;
         this.description = builder.description;
+        this.genres = builder.genres;
     }
 
     public Long getId() {
@@ -41,6 +45,14 @@ public class Movie {
         this.description = description;
     }
 
+    public Map<Long, String> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Map<Long, String> genres) {
+        this.genres = genres;
+    }
+
     public static MovieBuilder builder() {
         return new MovieBuilder();
     }
@@ -50,18 +62,19 @@ public class Movie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return Objects.equals(id, movie.id) && title.equals(movie.title) && description.equals(movie.description);
+        return Objects.equals(id, movie.id) && title.equals(movie.title) && description.equals(movie.description) && genres.equals(movie.genres);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description);
+        return Objects.hash(id, title, description, genres);
     }
 
     public static class MovieBuilder {
         private Long id;
         private String title;
         private String description;
+        private Map<Long, String> genres = new HashMap<>();
 
         public MovieBuilder id(Long id) {
             this.id = id;
@@ -75,6 +88,11 @@ public class Movie {
 
         public MovieBuilder description(String description) {
             this.description = description;
+            return this;
+        }
+
+        public MovieBuilder genres(Map<Long, String> genres) {
+            this.genres = genres;
             return this;
         }
 

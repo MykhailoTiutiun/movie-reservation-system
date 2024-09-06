@@ -11,8 +11,10 @@ public interface MovieService {
 
     //Crud movies
     Movie create(Movie movie);
-
     Movie update(Movie movie);
+
+    void addGenre(Long movieId, Long genreId);
+    void removeGenre(Long movieId, Long genreId);
 
     void deleteById(Long id);
 

@@ -3,6 +3,7 @@ package com.mykhailotiutiun.moviereservationservice.auditorium.datasource;
 import com.mykhailotiutiun.moviereservationservice.auditorium.domain.Auditorium;
 import com.mykhailotiutiun.moviereservationservice.auditorium.domain.AuditoriumRepository;
 import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -62,6 +63,9 @@ public class AuditoriumRepositoryImpl implements AuditoriumRepository {
 
     @Override
     public void deleteById(Long id) {
-        jdbcTemplate.update("DELETE FROM auditoriums WHERE id = ?", id);
+        int result = jdbcTemplate.update("DELETE FROM auditoriums WHERE id = ?", id);
+        if(result == 0){
+            throw new NotFoundException();
+        }
     }
 }
