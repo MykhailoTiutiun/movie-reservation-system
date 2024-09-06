@@ -58,6 +58,24 @@ public class MovieDomainTest {
     }
 
     @Test
+    public void addGenreTest() {
+        Long movieId = 1L;
+        Long genreId = 2L;
+
+        movieService.addGenre(movieId, genreId);
+        verify(movieRepository).addGenre(movieId, genreId);
+    }
+
+    @Test
+    public void removeGenreTest(){
+        Long movieId = 1L;
+        Long genreId = 2L;
+
+        movieService.removeGenre(movieId, genreId);
+        verify(movieRepository).removeGenre(movieId, genreId);
+    }
+
+    @Test
     public void deleteByIdTest() {
         long id = 1L;
         movieService.deleteById(id);

@@ -1,6 +1,7 @@
 package com.mykhailotiutiun.moviereservationservice.showtime;
 
 import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 import com.mykhailotiutiun.moviereservationservice.showtime.datasource.ShowtimeMapper;
 import com.mykhailotiutiun.moviereservationservice.showtime.datasource.ShowtimeRepositoryImpl;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.Showtime;
@@ -80,6 +81,7 @@ public class ShowtimeRepositoryTest {
 
     @Test
     public void updateTest(){
+        long notExistedId = 11L;
         Showtime expectedShowtime = Showtime.builder()
                 .id(13L)
                 .date(LocalDate.of(2024, 8, 31))
@@ -97,13 +99,19 @@ public class ShowtimeRepositoryTest {
                 .endTime(LocalTime.of(14, 0))
                 .build();
         assertThrows(AlreadyExistsException.class, () -> showtimeRepository.update(collisionShowtime));
+
+        expectedShowtime.setId(notExistedId);
+        assertThrows(NotFoundException.class, () -> showtimeRepository.update(expectedShowtime));
     }
 
     @Test
     public void deleteByIdTest() {
+        long notExistedId = 11L;
         long deleteId = 12L;
         showtimeRepository.deleteById(deleteId);
 
         assertThrows(EmptyResultDataAccessException.class, () -> jdbcTemplate.queryForObject("SELECT * FROM showtimes WHERE id = ?", new ShowtimeMapper(), deleteId));
+
+        assertThrows(NotFoundException.class, () -> showtimeRepository.deleteById(notExistedId));
     }
 }

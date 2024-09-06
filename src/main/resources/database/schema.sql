@@ -39,6 +39,17 @@ create unique index if not exists movies_title_uindex
 create unique index if not exists movies_description_uindex
     on movies (description);
 
+create table if not exists genres
+(
+    id   bigserial
+        constraint genres_pk
+            primary key,
+    name varchar not null
+);
+
+create unique index if not exists genres_name_uindex
+    on genres (name);
+
 create table if not exists auditoriums
 (
     id          bigserial
@@ -95,4 +106,12 @@ create table if not exists user_verification_tokens
 create unique index if not exists user_verification_tokens_token_uindex
     on user_verification_tokens (token);
 
-
+create table if not exists movies_genres
+(
+    movie_id bigint
+        references movies
+            on delete cascade,
+    genre_id bigint
+        references genres
+            on delete cascade
+);

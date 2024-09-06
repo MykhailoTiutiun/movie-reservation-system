@@ -80,9 +80,12 @@ public class AuditoriumRepositoryTest {
 
     @Test
     public void deleteByIdTest() {
+        long notExistedId = 11L;
         long deleteId = 13L;
         auditoriumRepository.deleteById(deleteId);
 
         assertThrows(EmptyResultDataAccessException.class, () -> jdbcTemplate.queryForObject("SELECT * FROM auditoriums WHERE id = ?", new MovieMapper(), deleteId));
+
+        assertThrows(NotFoundException.class, () -> auditoriumRepository.deleteById(notExistedId));
     }
 }

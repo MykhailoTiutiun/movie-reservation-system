@@ -33,6 +33,16 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public void addGenre(Long movieId, Long genreId) {
+        movieRepository.addGenre(movieId,genreId);
+    }
+
+    @Override
+    public void removeGenre(Long movieId, Long genreId) {
+        movieRepository.removeGenre(movieId, genreId);
+    }
+
+    @Override
     public void deleteById(Long id) {
         movieRepository.deleteById(id);
     }

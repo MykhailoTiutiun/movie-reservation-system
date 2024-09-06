@@ -68,6 +68,7 @@ public class MovieRepositoryTest {
 
     @Test
     public void updateTest() {
+        long notExistedId = 11L;
         Movie expectedMovie = Movie.builder()
                 .id(12L)
                 .title("updatedTest")
@@ -76,13 +77,39 @@ public class MovieRepositoryTest {
         assertNotEquals(expectedMovie, jdbcTemplate.queryForObject("SELECT * FROM movies WHERE id = ?", new MovieMapper(), expectedMovie.getId()));
         movieRepository.update(expectedMovie);
         assertEquals(expectedMovie, jdbcTemplate.queryForObject("SELECT * FROM movies WHERE id = ?", new MovieMapper(), expectedMovie.getId()));
+
+        expectedMovie.setId(notExistedId);
+        assertThrows(NotFoundException.class, () -> movieRepository.update(expectedMovie));
+    }
+
+    @Test
+    public void addGenre(){
+        long moveId = 14L;
+        long genreId = 13L;
+
+        movieRepository.addGenre(moveId, genreId);
+
+        assertTrue(movieRepository.findById(moveId).orElseThrow(NotFoundException::new).getGenres().containsKey(genreId));
+    }
+
+    @Test
+    public void removeGenre(){
+        long moveId = 15L;
+        long genreId = 14L;
+
+        movieRepository.removeGenre(moveId, genreId);
+
+        assertFalse(movieRepository.findById(moveId).orElseThrow(NotFoundException::new).getGenres().containsKey(genreId));
     }
 
     @Test
     public void deleteByIdTest() {
-        long deleteId = 12L;
+        long notExistedId = 11L;
+        long deleteId = 13L;
         movieRepository.deleteById(deleteId);
 
         assertThrows(EmptyResultDataAccessException.class, () -> jdbcTemplate.queryForObject("SELECT * FROM movies WHERE id = ?", new MovieMapper(), deleteId));
+
+        assertThrows(NotFoundException.class, () -> movieRepository.deleteById(notExistedId));
     }
 }

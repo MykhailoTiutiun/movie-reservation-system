@@ -1,6 +1,7 @@
 package com.mykhailotiutiun.moviereservationservice.showtime.datasource;
 
 import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.Showtime;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.ShowtimeRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -58,12 +59,18 @@ public class ShowtimeRepositoryImpl implements ShowtimeRepository {
             throw new AlreadyExistsException();
         }
 
-        jdbcTemplate.update("UPDATE showtimes SET date = ?, start_time = ?, end_time = ? WHERE id = ?", showtime.getDate(), showtime.getStartTime(), showtime.getEndTime(), showtime.getId());
+        int result = jdbcTemplate.update("UPDATE showtimes SET date = ?, start_time = ?, end_time = ? WHERE id = ?", showtime.getDate(), showtime.getStartTime(), showtime.getEndTime(), showtime.getId());
+        if(result == 0){
+            throw new NotFoundException();
+        }
         return showtime;
     }
 
     @Override
     public void deleteById(Long id) {
-        jdbcTemplate.update("DELETE FROM showtimes WHERE id = ?", id);
+        int result = jdbcTemplate.update("DELETE FROM showtimes WHERE id = ?", id);
+        if(result == 0){
+            throw new NotFoundException();
+        }
     }
 }
