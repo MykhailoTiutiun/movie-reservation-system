@@ -30,7 +30,8 @@ create table if not exists movies
     id          bigserial
         primary key,
     title       varchar not null,
-    description varchar not null
+    description varchar not null,
+    image_id bigint
 );
 
 create unique index if not exists movies_title_uindex

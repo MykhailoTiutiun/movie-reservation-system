@@ -37,7 +37,7 @@ public class AuditoriumDomainTest {
         when(auditoriumRepository.findById(auditorium.getId())).thenReturn(Optional.of(auditorium));
         assertEquals(auditorium, auditoriumService.getById(auditorium.getId()));
 
-        when(auditoriumRepository.findById(auditorium.getId())).thenThrow(NotFoundException.class);
+        when(auditoriumRepository.findById(auditorium.getId())).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> auditoriumService.getById(auditorium.getId()));
     }
 

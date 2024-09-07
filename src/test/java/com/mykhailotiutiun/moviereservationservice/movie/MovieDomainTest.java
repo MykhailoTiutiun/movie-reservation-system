@@ -39,7 +39,7 @@ public class MovieDomainTest {
         when(movieRepository.findById(movie.getId())).thenReturn(Optional.of(movie));
         assertEquals(movie, movieService.getById(movie.getId()));
 
-        when(movieRepository.findById(movie.getId())).thenThrow(NotFoundException.class);
+        when(movieRepository.findById(movie.getId())).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> movieService.getById(movie.getId()));
     }
 
