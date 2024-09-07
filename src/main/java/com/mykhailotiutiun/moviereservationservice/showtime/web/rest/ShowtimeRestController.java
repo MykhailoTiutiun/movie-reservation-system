@@ -41,7 +41,7 @@ public class ShowtimeRestController {
                 .endTime(LocalTime.parse(createShowtimeRequest.endTime()))
                 .build();
         showtimeService.create(showtime, createShowtimeRequest.auditoriumId());
-        return new ResponseEntity<>(showtimeResponseMapper.toShowtimeResponse(showtime), HttpStatus.OK);
+        return new ResponseEntity<>(showtimeResponseMapper.toShowtimeResponse(showtime), HttpStatus.CREATED);
     }
 
     @PutMapping

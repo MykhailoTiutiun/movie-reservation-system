@@ -58,9 +58,12 @@ public class MovieRepositoryImpl implements MovieRepository {
     @Override
     public Movie create(Movie movie) {
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName("movies").usingGeneratedKeyColumns("id");
-        Map<String, Object> params = new HashMap<>(2);
+        Map<String, Object> params = new HashMap<>(3);
         params.put("title", movie.getTitle());
         params.put("description", movie.getDescription());
+        if(movie.getImageId() != null){
+            params.put("imageId", movie.getImageId());
+        }
 
         try {
             Long id = (Long) simpleJdbcInsert.executeAndReturnKey(params);
@@ -73,7 +76,7 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Movie update(Movie movie) {
-        int result = jdbcTemplate.update("UPDATE movies SET title = ?, description = ? WHERE id = ?", movie.getTitle(), movie.getDescription(), movie.getId());
+        int result = jdbcTemplate.update("UPDATE movies SET title = ?, description = ?, image_id = ? WHERE id = ?", movie.getTitle(), movie.getDescription(), movie.getImageId(), movie.getId());
         if(result == 0){
             throw new NotFoundException();
         }

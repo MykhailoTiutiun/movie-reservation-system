@@ -10,6 +10,7 @@ public class Movie {
     private String title;
     private String description;
     private Map<Long, String> genres = new HashMap<>();
+    private Long imageId;
 
     public Movie() {
     }
@@ -19,6 +20,7 @@ public class Movie {
         this.title = builder.title;
         this.description = builder.description;
         this.genres = builder.genres;
+        this.imageId = builder.imageId;
     }
 
     public Long getId() {
@@ -53,6 +55,14 @@ public class Movie {
         this.genres = genres;
     }
 
+    public Long getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Long imageId) {
+        this.imageId = imageId;
+    }
+
     public static MovieBuilder builder() {
         return new MovieBuilder();
     }
@@ -62,12 +72,12 @@ public class Movie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return Objects.equals(id, movie.id) && title.equals(movie.title) && description.equals(movie.description) && genres.equals(movie.genres);
+        return Objects.equals(id, movie.id) && title.equals(movie.title) && description.equals(movie.description) && genres.equals(movie.genres) && Objects.equals(imageId, movie.imageId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, genres);
+        return Objects.hash(id, title, description, genres, imageId);
     }
 
     public static class MovieBuilder {
@@ -75,6 +85,7 @@ public class Movie {
         private String title;
         private String description;
         private Map<Long, String> genres = new HashMap<>();
+        private Long imageId;
 
         public MovieBuilder id(Long id) {
             this.id = id;
@@ -93,6 +104,11 @@ public class Movie {
 
         public MovieBuilder genres(Map<Long, String> genres) {
             this.genres = genres;
+            return this;
+        }
+
+        public MovieBuilder imageId(Long imageId) {
+            this.imageId = imageId;
             return this;
         }
 

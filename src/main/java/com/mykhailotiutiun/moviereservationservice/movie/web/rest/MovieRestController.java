@@ -22,6 +22,10 @@ public class MovieRestController {
         this.movieService = movieService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Movie> getById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(movieService.getById(id), HttpStatus.OK);
+    }
     @GetMapping
     public ResponseEntity<List<Movie>> getList(){
         return new ResponseEntity<>(movieService.getList(), HttpStatus.OK);
@@ -32,8 +36,9 @@ public class MovieRestController {
         Movie movie = Movie.builder()
                 .title(createMovieRequest.title())
                 .description(createMovieRequest.description())
+                .imageId(createMovieRequest.imageId())
                 .build();
-        return new ResponseEntity<>(movieService.create(movie), HttpStatus.OK);
+        return new ResponseEntity<>(movieService.create(movie), HttpStatus.CREATED);
     }
 
     @PutMapping
@@ -42,6 +47,7 @@ public class MovieRestController {
                 .id(updateMovieRequest.id())
                 .title(updateMovieRequest.title())
                 .description(updateMovieRequest.description())
+                .imageId(updateMovieRequest.imageId())
                 .build();
         return new ResponseEntity<>(movieService.update(movie), HttpStatus.OK);
     }

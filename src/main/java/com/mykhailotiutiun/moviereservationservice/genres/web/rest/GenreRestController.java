@@ -32,7 +32,7 @@ public class GenreRestController {
                 .name(createGenreRequest.name())
                 .build();
         genreService.create(genre);
-        return new ResponseEntity<>(genre, HttpStatus.OK);
+        return new ResponseEntity<>(genre, HttpStatus.CREATED);
     }
 
     @PutMapping

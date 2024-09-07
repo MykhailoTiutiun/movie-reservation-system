@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers("/error/**").permitAll()
                 .requestMatchers("/v1/users/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/v1/movies/**", "/v1/auditoriums/**", "/v1/showtimes/**", "/v1/seats/**", "/v1/genres/**").authenticated()
+                .requestMatchers(HttpMethod.GET, "/v1/**").permitAll()
                 .anyRequest().hasRole("ADMIN")
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
