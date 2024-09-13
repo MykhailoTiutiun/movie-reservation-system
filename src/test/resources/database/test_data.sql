@@ -45,12 +45,8 @@ INSERT INTO movies(id, title, description)
 VALUES (15, 'removeGenreTest', 'removeGenreTest');
 INSERT INTO movies_genres(movie_id, genre_id)
 VALUES (15, 14);
-INSERT INTO auditoriums(id, name, description, movie_id)
-VALUES (10, 'Test', 'Test', 10);
-INSERT INTO auditoriums(id, name, description, movie_id)
-VALUES (12, 'MovieIdNullTest', 'MovieIdNullTest', NULL);
-INSERT INTO auditoriums(id, name, description, movie_id)
-VALUES (13, 'deleteTest', 'deleteTest', 10);
+INSERT INTO auditoriums(id, name, description)
+VALUES (10, 'Test', 'Test');
 INSERT INTO showtimes(id, date, start_time, end_time, auditorium_id)
 VALUES (10, '2024-08-31', '10:00', '12:00', 10);
 INSERT INTO showtimes(id, date, start_time, end_time, auditorium_id)

@@ -8,11 +8,9 @@ import java.util.List;
 public class AuditoriumServiceImpl implements AuditoriumService {
 
     private final AuditoriumRepository auditoriumRepository;
-    private final ToAuditoriumSeatsCloner toAuditoriumSeatsCloner;
 
-    public AuditoriumServiceImpl(AuditoriumRepository auditoriumRepository, ToAuditoriumSeatsCloner toAuditoriumSeatsCloner) {
+    public AuditoriumServiceImpl(AuditoriumRepository auditoriumRepository) {
         this.auditoriumRepository = auditoriumRepository;
-        this.toAuditoriumSeatsCloner = toAuditoriumSeatsCloner;
     }
 
     @Override
@@ -21,28 +19,8 @@ public class AuditoriumServiceImpl implements AuditoriumService {
     }
 
     @Override
-    public List<Auditorium> getListByMovieId(Long movieId) {
-        return auditoriumRepository.findAllByMovieId(movieId);
+    public List<Auditorium> getList() {
+        return auditoriumRepository.findAll();
     }
 
-    @Override
-    public Auditorium cloneToMovie(Long id, Long movieId) {
-        Auditorium auditorium = getById(id);
-        Auditorium linkedAuditorium = Auditorium.builder()
-                .name(auditorium.getName())
-                .description(auditorium.getDescription())
-                .movieId(movieId)
-                .build();
-        auditoriumRepository.create(linkedAuditorium);
-        toAuditoriumSeatsCloner.cloneFromAuditoriumToAuditorium(auditorium.getId(), linkedAuditorium.getId());
-        return linkedAuditorium;
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        if(id <= 3){
-            throw new InvalidDeletionException();
-        }
-        auditoriumRepository.deleteById(id);
-    }
 }

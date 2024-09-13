@@ -57,10 +57,7 @@ create table if not exists auditoriums
         constraint auditoriums_pk
             primary key,
     name        varchar,
-    description varchar,
-    movie_id    bigint
-        references movies
-            on delete cascade
+    description varchar
 );
 
 create table if not exists showtimes
