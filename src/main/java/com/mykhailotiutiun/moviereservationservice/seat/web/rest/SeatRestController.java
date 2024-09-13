@@ -2,7 +2,7 @@ package com.mykhailotiutiun.moviereservationservice.seat.web.rest;
 
 import com.mykhailotiutiun.moviereservationservice.seat.domain.Seat;
 import com.mykhailotiutiun.moviereservationservice.seat.domain.SeatService;
-import com.mykhailotiutiun.moviereservationservice.seat.dto.ReserveSeatRequest;
+import com.mykhailotiutiun.moviereservationservice.seat.dto.ReserveSeatsRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +34,8 @@ public class SeatRestController {
     }
 
     @PostMapping("/reserve")
-    public ResponseEntity<?> reserveSeat(@RequestBody ReserveSeatRequest request){
-        seatService.reserveSeat(request.seatId(), request.userId());
+    public ResponseEntity<?> reserveSeat(@RequestBody ReserveSeatsRequest request){
+        seatService.reserveSeats(request.seatIds(), request.userId());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

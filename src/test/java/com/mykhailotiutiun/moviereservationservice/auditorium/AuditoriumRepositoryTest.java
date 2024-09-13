@@ -39,6 +39,7 @@ public class AuditoriumRepositoryTest {
                 .id(existedId)
                 .name("Test")
                 .description("Test")
+                .movieId(10L)
                 .build();
         assertEquals(expectedAuditorium, auditoriumRepository.findById(existedId).orElseThrow(NotFoundException::new));
         assertTrue(auditoriumRepository.findById(notExistedId).isEmpty());
@@ -53,6 +54,7 @@ public class AuditoriumRepositoryTest {
                 .id(existedId)
                 .name("Test")
                 .description("Test")
+                .movieId(movieId)
                 .build();
         assertTrue(auditoriumRepository.findAllByMovieId(movieId).contains(expectedAuditorium));
 
@@ -60,6 +62,7 @@ public class AuditoriumRepositoryTest {
                 .id(expectedMovieIdNullAuditoriumId)
                 .name("MovieIdNullTest")
                 .description("MovieIdNullTest")
+                .movieId(null)
                 .build();
         assertTrue(auditoriumRepository.findAllByMovieId(null).contains(expectedMovieIdNullAuditorium));
     }
@@ -70,12 +73,13 @@ public class AuditoriumRepositoryTest {
         Auditorium expectedAuditorium = Auditorium.builder()
                 .name("createdTest")
                 .description("createdTest")
+                .movieId(movieId)
                 .build();
-        auditoriumRepository.create(expectedAuditorium, movieId);
+        auditoriumRepository.create(expectedAuditorium);
         assertEquals(expectedAuditorium, jdbcTemplate.queryForObject("SELECT * FROM auditoriums WHERE id = ?", new AuditoriumMapper(), expectedAuditorium.getId()));
 
         expectedAuditorium.setId(null);
-        assertThrows(AlreadyExistsException.class, () -> auditoriumRepository.create(expectedAuditorium, movieId));
+        assertThrows(AlreadyExistsException.class, () -> auditoriumRepository.create(expectedAuditorium));
     }
 
     @Test

@@ -31,6 +31,7 @@ public class SecurityConfig {
                 .requestMatchers("/error/**").permitAll()
                 .requestMatchers("/v1/users/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/v1/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/v1/seats/reserve").authenticated()
                 .anyRequest().hasRole("ADMIN")
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

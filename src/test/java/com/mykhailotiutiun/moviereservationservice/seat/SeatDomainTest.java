@@ -50,7 +50,7 @@ public class SeatDomainTest {
                 .name(seat.getName())
                 .availability(false)
                 .build();
-        verify(seatRepository).createAll(eq(List.of(expectedSeat)), eq(toAuditoriumId));
+        verify(seatRepository).createAllToAuditorium(eq(List.of(expectedSeat)), eq(toAuditoriumId));
     }
 
     @Test
@@ -65,14 +65,14 @@ public class SeatDomainTest {
                 .name(seat.getName())
                 .availability(true)
                 .build();
-        verify(seatRepository, times(1)).createAll(eq(List.of(expectedSeat)), eq(auditoriumId), eq(showtimeId));
+        verify(seatRepository, times(1)).createAllToShowtime(eq(List.of(expectedSeat)), eq(showtimeId));
     }
 
     @Test
-    public void reserveSeat() {
+    public void reserveSeats() {
         long id = 1L;
         long userId = 2L;
-        seatService.reserveSeat(id, userId);
-        verify(seatRepository).reserveSeat(id, userId);
+        seatService.reserveSeats(List.of(id), userId);
+        verify(seatRepository).reserveSeats(List.of(id), userId);
     }
 }

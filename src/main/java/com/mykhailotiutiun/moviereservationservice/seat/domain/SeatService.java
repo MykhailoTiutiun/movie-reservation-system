@@ -16,5 +16,5 @@ public interface SeatService {
     void cloneFromAuditoriumToShowtime(Long auditoriumId, Long showtimeId);
 
     // Reserve free seat from list
-    void reserveSeat(Long id, Long userId);
+    void reserveSeats(List<Long> ids, Long userId);
 }

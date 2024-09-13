@@ -82,7 +82,7 @@ create table if not exists seats
             primary key,
     name          varchar not null,
     availability  boolean,
-    auditorium_id bigint  not null
+    auditorium_id bigint
         references auditoriums
             on delete cascade,
     showtime_id   bigint

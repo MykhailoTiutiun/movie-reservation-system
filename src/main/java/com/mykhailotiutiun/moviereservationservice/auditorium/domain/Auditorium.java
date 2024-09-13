@@ -7,6 +7,7 @@ public class Auditorium {
     private Long id;
     private String name;
     private String description;
+    private Long movieId;
 
     public Auditorium() {
     }
@@ -15,6 +16,7 @@ public class Auditorium {
         this.id = builder.id;
         this.name = builder.name;
         this.description = builder.description;
+        this.movieId = builder.movieId;
     }
 
     public Long getId() {
@@ -41,6 +43,14 @@ public class Auditorium {
         this.description = description;
     }
 
+    public Long getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Long movieId) {
+        this.movieId = movieId;
+    }
+
     public static AuditoriumBuilder builder() {
         return new AuditoriumBuilder();
     }
@@ -50,18 +60,19 @@ public class Auditorium {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Auditorium that = (Auditorium) o;
-        return Objects.equals(id, that.id) && name.equals(that.name) && description.equals(that.description);
+        return Objects.equals(id, that.id) && name.equals(that.name) && description.equals(that.description) && Objects.equals(movieId, that.movieId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description);
+        return Objects.hash(id, name, description, movieId);
     }
 
     public static class AuditoriumBuilder {
         private Long id;
         private String name;
         private String description;
+        private Long movieId;
 
         public AuditoriumBuilder id(Long id) {
             this.id = id;
@@ -75,6 +86,11 @@ public class Auditorium {
 
         public AuditoriumBuilder description(String description) {
             this.description = description;
+            return this;
+        }
+
+        public AuditoriumBuilder movieId(Long movieId) {
+            this.movieId = movieId;
             return this;
         }
 

@@ -1,5 +1,6 @@
 package com.mykhailotiutiun.moviereservationservice.seat.domain;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class SeatServiceImpl implements SeatService {
@@ -12,7 +13,11 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     public List<Seat> getListByShowtimeId(Long showtimeId) {
-        return seatRepository.findAllByShowtimeId(showtimeId);
+        List<Seat> seats = seatRepository.findAllByShowtimeId(showtimeId);
+        if(seats.size() > 1) {
+            seats.sort(Comparator.comparing(Seat::getId));
+        }
+        return seats;
     }
 
     @Override
@@ -27,7 +32,7 @@ public class SeatServiceImpl implements SeatService {
                 .name(seat.getName())
                 .availability(false).build()).toList();
 
-        seatRepository.createAll(newSeats, toAuditoriumId);
+        seatRepository.createAllToAuditorium(newSeats, toAuditoriumId);
     }
 
     @Override
@@ -36,11 +41,11 @@ public class SeatServiceImpl implements SeatService {
         List<Seat> newSeats = seats.stream().map(seat -> Seat.builder()
                 .name(seat.getName())
                 .availability(true).build()).toList();
-        seatRepository.createAll(newSeats, auditoriumId, showtimeId);
+        seatRepository.createAllToShowtime(newSeats, showtimeId);
     }
 
     @Override
-    public void reserveSeat(Long id, Long userId) {
-        seatRepository.reserveSeat(id, userId);
+    public void reserveSeats(List<Long> ids, Long userId) {
+        seatRepository.reserveSeats(ids, userId);
     }
 }

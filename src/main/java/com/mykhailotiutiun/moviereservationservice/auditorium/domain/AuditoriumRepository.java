@@ -9,6 +9,6 @@ public interface AuditoriumRepository {
 
     List<Auditorium> findAllByMovieId(Long movieId);
 
-    Auditorium create(Auditorium auditorium, Long movieId);
+    Auditorium create(Auditorium auditorium);
     void deleteById(Long id);
 }

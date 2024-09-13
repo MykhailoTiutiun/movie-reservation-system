@@ -20,6 +20,11 @@ public class AuditoriumRestController {
         this.auditoriumService = auditoriumService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Auditorium> getById(@PathVariable Long id){
+        return new ResponseEntity<>(auditoriumService.getById(id), HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<Auditorium>> getByMovieId(@RequestParam(required = false) Long movieId){
         return new ResponseEntity<>(auditoriumService.getListByMovieId(movieId), HttpStatus.OK);

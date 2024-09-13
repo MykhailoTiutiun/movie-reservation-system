@@ -40,10 +40,10 @@ public class AuditoriumRepositoryImpl implements AuditoriumRepository {
     }
 
     @Override
-    public Auditorium create(Auditorium auditorium, Long movieId) {
+    public Auditorium create(Auditorium auditorium) {
         try {
             jdbcTemplate.queryForObject("SELECT (1) FROM auditoriums WHERE name = ? AND description = ? AND movie_id = ?", Boolean.class,
-                    auditorium.getName(), auditorium.getDescription(), movieId);
+                    auditorium.getName(), auditorium.getDescription(), auditorium.getMovieId());
             throw new AlreadyExistsException();
         } catch (EmptyResultDataAccessException ignored) {
         } catch (IncorrectResultSizeDataAccessException e) {
@@ -54,7 +54,7 @@ public class AuditoriumRepositoryImpl implements AuditoriumRepository {
         Map<String, Object> params = new HashMap<>();
         params.put("name", auditorium.getName());
         params.put("description", auditorium.getDescription());
-        params.put("movie_id", movieId);
+        params.put("movie_id", auditorium.getMovieId());
 
         Long id = (Long) simpleJdbcInsert.executeAndReturnKey(params);
         auditorium.setId(id);

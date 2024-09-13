@@ -10,6 +10,7 @@ public class Showtime {
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
+    private Long auditoriumId;
 
     public Showtime() {
     }
@@ -19,6 +20,7 @@ public class Showtime {
         this.date = builder.date;
         this.startTime = builder.startTime;
         this.endTime = builder.endTime;
+        this.auditoriumId = builder.auditoriumId;
     }
 
     public Long getId() {
@@ -53,6 +55,14 @@ public class Showtime {
         this.endTime = endTime;
     }
 
+    public Long getAuditoriumId() {
+        return auditoriumId;
+    }
+
+    public void setAuditoriumId(Long auditoriumId) {
+        this.auditoriumId = auditoriumId;
+    }
+
     public static ShowtimeBuilder builder() {
         return new ShowtimeBuilder();
     }
@@ -62,12 +72,12 @@ public class Showtime {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Showtime showtime = (Showtime) o;
-        return Objects.equals(id, showtime.id) && date.equals(showtime.date) && startTime.equals(showtime.startTime) && endTime.equals(showtime.endTime);
+        return Objects.equals(id, showtime.id) && date.equals(showtime.date) && startTime.equals(showtime.startTime) && endTime.equals(showtime.endTime) && Objects.equals(auditoriumId, showtime.auditoriumId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, date, startTime, endTime);
+        return Objects.hash(id, date, startTime, endTime, auditoriumId);
     }
 
     public static class ShowtimeBuilder {
@@ -75,6 +85,7 @@ public class Showtime {
         private LocalDate date;
         private LocalTime startTime;
         private LocalTime endTime;
+        private Long auditoriumId;
 
         public ShowtimeBuilder id(Long id) {
             this.id = id;
@@ -93,6 +104,11 @@ public class Showtime {
 
         public ShowtimeBuilder endTime(LocalTime endTime) {
             this.endTime = endTime;
+            return this;
+        }
+
+        public ShowtimeBuilder auditoriumId(Long auditoriumId){
+            this.auditoriumId = auditoriumId;
             return this;
         }
 

@@ -60,12 +60,13 @@ public class AuditoriumDomainTest {
         Auditorium expectedAuditorium = Auditorium.builder()
                 .name(auditorium.getName())
                 .description(auditorium.getDescription())
+                .movieId(movieId)
                 .build();
         when(auditoriumRepository.findById(auditorium.getId())).thenReturn(Optional.of(auditorium));
         auditoriumService.cloneToMovie(auditorium.getId(), movieId);
 
         verify(toAuditoriumSeatsCloner).cloneFromAuditoriumToAuditorium(eq(auditorium.getId()), eq(null));
-        verify(auditoriumRepository).create(eq(expectedAuditorium), eq(movieId));
+        verify(auditoriumRepository).create(eq(expectedAuditorium));
     }
 
     @Test

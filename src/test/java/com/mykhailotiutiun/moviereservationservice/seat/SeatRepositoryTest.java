@@ -77,8 +77,8 @@ public class SeatRepositoryTest {
                 .name("createdTest")
                 .availability(true)
                 .build();
-        seatRepository.createAll(List.of(expectedSeat), auditoriumId, showtimeId);
-        seatRepository.createAll(List.of(expectedSeat), auditoriumId);
+        seatRepository.createAllToShowtime(List.of(expectedSeat), showtimeId);
+        seatRepository.createAllToAuditorium(List.of(expectedSeat), auditoriumId);
         expectedSeat.setId(1L);
         assertEquals(expectedSeat, jdbcTemplate.queryForObject("SELECT * FROM seats WHERE id = 1", new SeatMapper()));
         expectedSeat.setId(2L);
@@ -92,12 +92,12 @@ public class SeatRepositoryTest {
         long reserveId = 12L;
         long notExistedId = 11L;
 
-        seatRepository.reserveSeat(reserveId, userId);
+        seatRepository.reserveSeats(List.of(reserveId), userId);
         assertNotEquals(Boolean.TRUE, jdbcTemplate.queryForObject("SELECT availability FROM seats WHERE id = ?", Boolean.class, reserveId));
 
-        assertThrows(ReservationException.class, () -> seatRepository.reserveSeat(reserveId, userId));
+        assertThrows(ReservationException.class, () -> seatRepository.reserveSeats(List.of(reserveId), userId));
 
-        assertThrows(NotFoundException.class, () -> seatRepository.reserveSeat(notExistedId, userId));
+        assertThrows(NotFoundException.class, () -> seatRepository.reserveSeats(List.of(notExistedId), userId));
 
     }
 

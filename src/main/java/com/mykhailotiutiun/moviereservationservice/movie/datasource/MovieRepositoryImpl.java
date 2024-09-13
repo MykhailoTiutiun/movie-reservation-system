@@ -62,7 +62,7 @@ public class MovieRepositoryImpl implements MovieRepository {
         params.put("title", movie.getTitle());
         params.put("description", movie.getDescription());
         if(movie.getImageId() != null){
-            params.put("imageId", movie.getImageId());
+            params.put("image_id", movie.getImageId());
         }
 
         try {

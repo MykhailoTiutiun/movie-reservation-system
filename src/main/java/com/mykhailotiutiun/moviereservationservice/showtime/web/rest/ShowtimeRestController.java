@@ -27,10 +27,21 @@ public class ShowtimeRestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ShowtimeResponse>> getListByAuditoriumId(@RequestParam("auditoriumId") Long auditoriumId){
-        List<Showtime> showtimes = showtimeService.getListByAuditoriumId(auditoriumId);
+    public ResponseEntity<List<ShowtimeResponse>> getList(@RequestParam("auditoriumId") Long auditoriumId, @RequestParam(value = "date", required = false) String stringDate) {
+        List<Showtime> showtimes;
+        if(stringDate == null) {
+            showtimes = showtimeService.getList(auditoriumId);
+        } else {
+            showtimes = showtimeService.getList(auditoriumId, LocalDate.parse(stringDate));
+
+        }
         List<ShowtimeResponse> showtimeResponses = showtimes.stream().map(showtimeResponseMapper::toShowtimeResponse).toList();
         return new ResponseEntity<>(showtimeResponses, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Showtime> getById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(showtimeService.getById(id), HttpStatus.OK);
     }
 
     @PostMapping
@@ -39,8 +50,9 @@ public class ShowtimeRestController {
                 .date(LocalDate.parse(createShowtimeRequest.date()))
                 .startTime(LocalTime.parse(createShowtimeRequest.startTime()))
                 .endTime(LocalTime.parse(createShowtimeRequest.endTime()))
+                .auditoriumId(createShowtimeRequest.auditoriumId())
                 .build();
-        showtimeService.create(showtime, createShowtimeRequest.auditoriumId());
+        showtimeService.create(showtime);
         return new ResponseEntity<>(showtimeResponseMapper.toShowtimeResponse(showtime), HttpStatus.CREATED);
     }
 

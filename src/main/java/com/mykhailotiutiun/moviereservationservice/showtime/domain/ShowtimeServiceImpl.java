@@ -1,5 +1,9 @@
 package com.mykhailotiutiun.moviereservationservice.showtime.domain;
 
+import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
+
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 public class ShowtimeServiceImpl implements ShowtimeService {
@@ -13,14 +17,28 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     }
 
     @Override
-    public List<Showtime> getListByAuditoriumId(Long auditoriumId) {
+    public List<Showtime> getList(Long auditoriumId) {
         return showtimeRepository.findAllByAuditoriumId(auditoriumId);
     }
 
     @Override
-    public Showtime create(Showtime showtime, Long auditoriumId) {
-        showtimeRepository.create(showtime, auditoriumId);
-        showtimeSeatsCloner.cloneFromAuditoriumToShowtime(auditoriumId, showtime.getId());
+    public List<Showtime> getList(Long auditoriumId, LocalDate date) {
+        List<Showtime> showtimes = showtimeRepository.findAllByAuditoriumIdAndDate(auditoriumId, date);
+        if(showtimes.size() > 1) {
+            showtimes.sort(Comparator.comparing(Showtime::getStartTime));
+        }
+        return showtimes;
+    }
+
+    @Override
+    public Showtime getById(Long id) {
+        return showtimeRepository.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
+    public Showtime create(Showtime showtime) {
+        showtimeRepository.create(showtime);
+        showtimeSeatsCloner.cloneFromAuditoriumToShowtime(showtime.getAuditoriumId(), showtime.getId());
         return showtime;
     }
 

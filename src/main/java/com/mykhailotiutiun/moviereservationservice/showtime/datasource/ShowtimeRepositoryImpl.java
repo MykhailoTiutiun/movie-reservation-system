@@ -1,5 +1,6 @@
 package com.mykhailotiutiun.moviereservationservice.showtime.datasource;
 
+import com.mykhailotiutiun.moviereservationservice.auditorium.datasource.AuditoriumMapper;
 import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
 import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.Showtime;
@@ -9,9 +10,11 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ShowtimeRepositoryImpl implements ShowtimeRepository {
 
@@ -27,10 +30,24 @@ public class ShowtimeRepositoryImpl implements ShowtimeRepository {
     }
 
     @Override
-    public Showtime create(Showtime showtime, Long auditoriumId) {
+    public List<Showtime> findAllByAuditoriumIdAndDate(Long auditoriumId, LocalDate date) {
+        return jdbcTemplate.query("SELECT * FROM showtimes WHERE auditorium_id = ? AND date = ?", new ShowtimeMapper(), auditoriumId, date);
+    }
+
+    @Override
+    public Optional<Showtime> findById(Long id) {
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT * FROM showtimes WHERE id = ?", new ShowtimeMapper(), id));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Showtime create(Showtime showtime) {
         try {
             jdbcTemplate.queryForObject("SELECT (1) FROM showtimes WHERE date = ? AND auditorium_id = ? AND (end_time > ? AND start_time < ?)", Boolean.class,
-                    showtime.getDate(), auditoriumId, showtime.getStartTime(), showtime.getEndTime());
+                    showtime.getDate(), showtime.getAuditoriumId(), showtime.getStartTime(), showtime.getEndTime());
             throw new AlreadyExistsException();
         } catch (EmptyResultDataAccessException ignored) {
         } catch (IncorrectResultSizeDataAccessException e) {
@@ -42,7 +59,7 @@ public class ShowtimeRepositoryImpl implements ShowtimeRepository {
         params.put("date", showtime.getDate());
         params.put("start_time", showtime.getStartTime());
         params.put("end_time", showtime.getEndTime());
-        params.put("auditorium_id", auditoriumId);
+        params.put("auditorium_id", showtime.getAuditoriumId());
         Long id = (Long) simpleJdbcInsert.executeAndReturnKey(params);
         showtime.setId(id);
         return showtime;

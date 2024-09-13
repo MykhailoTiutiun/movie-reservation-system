@@ -31,8 +31,9 @@ public class AuditoriumServiceImpl implements AuditoriumService {
         Auditorium linkedAuditorium = Auditorium.builder()
                 .name(auditorium.getName())
                 .description(auditorium.getDescription())
+                .movieId(movieId)
                 .build();
-        auditoriumRepository.create(linkedAuditorium, movieId);
+        auditoriumRepository.create(linkedAuditorium);
         toAuditoriumSeatsCloner.cloneFromAuditoriumToAuditorium(auditorium.getId(), linkedAuditorium.getId());
         return linkedAuditorium;
     }

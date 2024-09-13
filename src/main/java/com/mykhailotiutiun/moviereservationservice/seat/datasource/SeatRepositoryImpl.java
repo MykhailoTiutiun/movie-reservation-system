@@ -37,44 +37,57 @@ public class SeatRepositoryImpl implements SeatRepository {
     }
 
     @Override
-    public void createAll(List<Seat> seats, Long auditoriumId){
-        jdbcTemplate.batchUpdate("INSERT INTO seats (name, availability, auditorium_id) VALUES (?, ?, ?)",
+    public void createAllToShowtime(List<Seat> seats, Long showtimeId){
+        jdbcTemplate.batchUpdate("INSERT INTO seats (name, availability, showtime_id) VALUES (?, ?, ?)",
                 seats,
                 seats.size(),
                 (PreparedStatement ps, Seat seat) -> {
                     ps.setString(1, seat.getName());
                     ps.setBoolean(2, seat.getAvailability());
-                    ps.setLong(3, auditoriumId);
+                    ps.setLong(3, showtimeId);
                 }
         );
     }
 
     @Override
-    public void createAll(List<Seat> seats, Long auditoriumId, Long showtimeId) {
-        jdbcTemplate.batchUpdate("INSERT INTO seats (name, availability, auditorium_id, showtime_id) VALUES (?, ?, ?, ?)",
+    public void createAllToAuditorium(List<Seat> seats, Long auditoriumId) {
+        jdbcTemplate.batchUpdate("INSERT INTO seats (name, availability, auditorium_id) VALUES (?, ?, ?)",
                 seats,
                 seats.size(),
                 (PreparedStatement ps, Seat seat) -> {
             ps.setString(1, seat.getName());
             ps.setBoolean(2, seat.getAvailability());
             ps.setLong(3, auditoriumId);
-            ps.setLong(4, showtimeId);
                 }
         );
     }
 
+
     @Override
-    public void reserveSeat(Long id, Long userId) {
+    public void reserveSeats(List<Long> ids, Long userId) {
         transactionTemplate.execute(status -> {
+            String sql = "SELECT availability FROM seats WHERE id IN (" +
+                    String.join(",", ids.stream().map(id -> "?").toArray(String[]::new)) + ") FOR UPDATE";
             try {
-                if (!Boolean.TRUE.equals(jdbcTemplate.queryForObject("SELECT availability FROM seats WHERE id = ? FOR UPDATE ", Boolean.class, id))) {
+                List<Boolean> queryForList = jdbcTemplate.queryForList(sql, Boolean.class, ids.toArray());
+                if (queryForList.contains(false)) {
                     throw new ReservationException();
+                }
+                if (queryForList.size() != ids.size()){
+                    throw new NotFoundException();
                 }
             } catch (EmptyResultDataAccessException e) {
                 throw new NotFoundException();
             }
 
-            jdbcTemplate.update("UPDATE seats SET availability = false, user_id = ? WHERE id = ?", userId, id);
+            jdbcTemplate.batchUpdate("UPDATE seats SET availability = false, user_id = ? WHERE id = ?",
+                    ids,
+                    ids.size(),
+                    (PreparedStatement ps, Long id) -> {
+                ps.setLong(1, userId);
+                ps.setLong(2, id);
+                    }
+            );
             return null;
         });
     }
