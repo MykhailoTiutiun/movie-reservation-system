@@ -3,7 +3,6 @@ package com.mykhailotiutiun.moviereservationservice.auditorium;
 import com.mykhailotiutiun.moviereservationservice.auditorium.domain.Auditorium;
 import com.mykhailotiutiun.moviereservationservice.auditorium.domain.AuditoriumRepository;
 import com.mykhailotiutiun.moviereservationservice.auditorium.domain.AuditoriumServiceImpl;
-import com.mykhailotiutiun.moviereservationservice.exception.InvalidDeletionException;
 import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,8 +15,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

@@ -2,9 +2,9 @@ package com.mykhailotiutiun.moviereservationservice.genre;
 
 import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
 import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
-import com.mykhailotiutiun.moviereservationservice.genres.datasource.GenreMapper;
-import com.mykhailotiutiun.moviereservationservice.genres.datasource.GenreRepositoryImpl;
-import com.mykhailotiutiun.moviereservationservice.genres.domain.Genre;
+import com.mykhailotiutiun.moviereservationservice.genre.datasource.GenreMapper;
+import com.mykhailotiutiun.moviereservationservice.genre.datasource.GenreRepositoryImpl;
+import com.mykhailotiutiun.moviereservationservice.genre.domain.Genre;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

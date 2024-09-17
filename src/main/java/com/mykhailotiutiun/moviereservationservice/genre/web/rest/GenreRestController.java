@@ -1,9 +1,9 @@
-package com.mykhailotiutiun.moviereservationservice.genres.web.rest;
+package com.mykhailotiutiun.moviereservationservice.genre.web.rest;
 
-import com.mykhailotiutiun.moviereservationservice.genres.domain.Genre;
-import com.mykhailotiutiun.moviereservationservice.genres.domain.GenreService;
-import com.mykhailotiutiun.moviereservationservice.genres.dto.CreateGenreRequest;
-import com.mykhailotiutiun.moviereservationservice.genres.dto.UpdateGenreRequest;
+import com.mykhailotiutiun.moviereservationservice.genre.domain.Genre;
+import com.mykhailotiutiun.moviereservationservice.genre.domain.GenreService;
+import com.mykhailotiutiun.moviereservationservice.genre.dto.CreateGenreRequest;
+import com.mykhailotiutiun.moviereservationservice.genre.dto.UpdateGenreRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,5 @@
 package com.mykhailotiutiun.moviereservationservice.auditorium.domain;
 
-import com.mykhailotiutiun.moviereservationservice.exception.InvalidDeletionException;
 import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 
 import java.util.List;

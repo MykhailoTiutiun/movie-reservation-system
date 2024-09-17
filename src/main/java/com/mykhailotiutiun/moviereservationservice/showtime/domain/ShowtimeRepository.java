@@ -8,6 +8,9 @@ public interface ShowtimeRepository {
 
     List<Showtime> findAllByAuditoriumId(Long auditoriumId);
     List<Showtime> findAllByAuditoriumIdAndDate(Long auditoriumId, LocalDate date);
+    List<Showtime> findAllByMovieId(Long movieId);
+    List<Showtime> findAllByMovieIdAndDate(Long movieId, LocalDate date);
+    List<Showtime> findAllByDate(LocalDate date);
     Optional<Showtime> findById(Long id);
 
     Showtime create(Showtime showtime);

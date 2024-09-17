@@ -1,6 +1,5 @@
 package com.mykhailotiutiun.moviereservationservice.showtime.datasource;
 
-import com.mykhailotiutiun.moviereservationservice.auditorium.datasource.AuditoriumMapper;
 import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
 import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.Showtime;
@@ -35,6 +34,21 @@ public class ShowtimeRepositoryImpl implements ShowtimeRepository {
     }
 
     @Override
+    public List<Showtime> findAllByMovieId(Long movieId) {
+        return jdbcTemplate.query("SELECT * FROM showtimes WHERE movie_id = ?", new ShowtimeMapper(), movieId);
+    }
+
+    @Override
+    public List<Showtime> findAllByMovieIdAndDate(Long movieId, LocalDate date) {
+        return jdbcTemplate.query("SELECT * FROM showtimes WHERE movie_id = ? AND date = ?", new ShowtimeMapper(), movieId, date);
+    }
+
+    @Override
+    public List<Showtime> findAllByDate(LocalDate date) {
+        return jdbcTemplate.query("SELECT * FROM showtimes WHERE date = ?", new ShowtimeMapper(), date);
+    }
+
+    @Override
     public Optional<Showtime> findById(Long id) {
         try {
             return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT * FROM showtimes WHERE id = ?", new ShowtimeMapper(), id));
@@ -60,6 +74,7 @@ public class ShowtimeRepositoryImpl implements ShowtimeRepository {
         params.put("start_time", showtime.getStartTime());
         params.put("end_time", showtime.getEndTime());
         params.put("auditorium_id", showtime.getAuditoriumId());
+        params.put("movie_id", showtime.getMovieId());
         Long id = (Long) simpleJdbcInsert.executeAndReturnKey(params);
         showtime.setId(id);
         return showtime;
@@ -80,7 +95,8 @@ public class ShowtimeRepositoryImpl implements ShowtimeRepository {
         if(result == 0){
             throw new NotFoundException();
         }
-        return showtime;
+
+        return jdbcTemplate.queryForObject("SELECT * FROM showtimes WHERE id = ?", new ShowtimeMapper(), showtime.getId());
     }
 
     @Override

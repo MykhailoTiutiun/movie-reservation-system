@@ -1,20 +1,17 @@
 package com.mykhailotiutiun.moviereservationservice.auditorium;
 
-import com.mykhailotiutiun.moviereservationservice.auditorium.datasource.AuditoriumMapper;
 import com.mykhailotiutiun.moviereservationservice.auditorium.datasource.AuditoriumRepositoryImpl;
 import com.mykhailotiutiun.moviereservationservice.auditorium.domain.Auditorium;
-import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
 import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
-import com.mykhailotiutiun.moviereservationservice.movie.datasource.MovieMapper;
 import org.junit.jupiter.api.Test;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 import javax.sql.DataSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AuditoriumRepositoryTest {
 

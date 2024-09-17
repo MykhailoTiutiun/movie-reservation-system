@@ -1,6 +1,6 @@
-package com.mykhailotiutiun.moviereservationservice.genres.datasource;
+package com.mykhailotiutiun.moviereservationservice.genre.datasource;
 
-import com.mykhailotiutiun.moviereservationservice.genres.domain.Genre;
+import com.mykhailotiutiun.moviereservationservice.genre.domain.Genre;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

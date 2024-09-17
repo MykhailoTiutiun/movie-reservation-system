@@ -15,9 +15,13 @@ public class ShowtimeMapper implements RowMapper<Showtime> {
                 .startTime(rs.getTime("start_time").toLocalTime())
                 .endTime(rs.getTime("end_time").toLocalTime())
                 .auditoriumId(rs.getLong("auditorium_id"))
+                .movieId(rs.getLong("movie_id"))
                 .build();
         if(showtime.getAuditoriumId() == 0){
             showtime.setAuditoriumId(null);
+        }
+        if(showtime.getMovieId() == 0){
+            showtime.setMovieId(null);
         }
         return showtime;
     }

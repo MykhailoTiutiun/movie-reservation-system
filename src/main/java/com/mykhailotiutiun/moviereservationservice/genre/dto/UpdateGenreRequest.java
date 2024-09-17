@@ -1,4 +1,4 @@
-package com.mykhailotiutiun.moviereservationservice.genres.dto;
+package com.mykhailotiutiun.moviereservationservice.genre.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

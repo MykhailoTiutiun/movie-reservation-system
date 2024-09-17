@@ -1,7 +1,7 @@
-package com.mykhailotiutiun.moviereservationservice.user.config;
+package com.mykhailotiutiun.moviereservationservice.mail.config;
 
+import com.mykhailotiutiun.moviereservationservice.mail.MailSenderImpl;
 import com.mykhailotiutiun.moviereservationservice.user.domain.MailSender;
-import com.mykhailotiutiun.moviereservationservice.user.mail.MailSenderImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
