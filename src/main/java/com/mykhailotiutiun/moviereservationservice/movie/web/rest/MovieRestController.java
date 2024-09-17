@@ -52,13 +52,13 @@ public class MovieRestController {
         return new ResponseEntity<>(movieService.update(movie), HttpStatus.OK);
     }
 
-    @PostMapping("/addGenre")
+    @PutMapping("/addGenre")
     public ResponseEntity<?> addGenre(@RequestBody @Valid GenreToMovieRequest genreToMovieRequest){
         movieService.addGenre(genreToMovieRequest.movieId(), genreToMovieRequest.genreId());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/removeGenre")
+    @PutMapping("/removeGenre")
     public ResponseEntity<?> removeGenre(@RequestBody @Valid GenreToMovieRequest genreToMovieRequest){
         movieService.removeGenre(genreToMovieRequest.movieId(), genreToMovieRequest.genreId());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

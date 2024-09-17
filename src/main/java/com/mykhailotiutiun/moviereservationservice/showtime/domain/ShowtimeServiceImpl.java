@@ -17,17 +17,36 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     }
 
     @Override
-    public List<Showtime> getList(Long auditoriumId) {
+    public List<Showtime> getListByAuditoriumId(Long auditoriumId) {
         return showtimeRepository.findAllByAuditoriumId(auditoriumId);
     }
 
     @Override
-    public List<Showtime> getList(Long auditoriumId, LocalDate date) {
+    public List<Showtime> getListByAuditoriumId(Long auditoriumId, LocalDate date) {
         List<Showtime> showtimes = showtimeRepository.findAllByAuditoriumIdAndDate(auditoriumId, date);
         if(showtimes.size() > 1) {
             showtimes.sort(Comparator.comparing(Showtime::getStartTime));
         }
         return showtimes;
+    }
+
+    @Override
+    public List<Showtime> getListByMovieId(Long movieId) {
+        return showtimeRepository.findAllByMovieId(movieId);
+    }
+
+    @Override
+    public List<Showtime> getListByMovieId(Long movieId, LocalDate date) {
+        List<Showtime> showtimes = showtimeRepository.findAllByMovieIdAndDate(movieId, date);
+        if(showtimes.size() > 1) {
+            showtimes.sort(Comparator.comparing(Showtime::getStartTime));
+        }
+        return showtimes;
+    }
+
+    @Override
+    public List<Showtime> getListByDate(LocalDate date) {
+        return showtimeRepository.findAllByDate(date);
     }
 
     @Override

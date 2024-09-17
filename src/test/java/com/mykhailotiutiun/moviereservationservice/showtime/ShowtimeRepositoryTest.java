@@ -1,6 +1,5 @@
 package com.mykhailotiutiun.moviereservationservice.showtime;
 
-import com.mykhailotiutiun.moviereservationservice.auditorium.domain.Auditorium;
 import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
 import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
 import com.mykhailotiutiun.moviereservationservice.showtime.datasource.ShowtimeMapper;
@@ -43,6 +42,7 @@ public class ShowtimeRepositoryTest {
                 .startTime(LocalTime.of(10, 0))
                 .endTime(LocalTime.of(12, 0))
                 .auditoriumId(auditoriumId)
+                .movieId(10L)
                 .build();
         assertTrue(showtimeRepository.findAllByAuditoriumId(auditoriumId).contains(expectedShowtime));
     }
@@ -58,8 +58,43 @@ public class ShowtimeRepositoryTest {
                 .startTime(LocalTime.of(10, 0))
                 .endTime(LocalTime.of(12, 0))
                 .auditoriumId(auditoriumId)
+                .movieId(10L)
                 .build();
         assertTrue(showtimeRepository.findAllByAuditoriumIdAndDate(auditoriumId, date).contains(expectedShowtime));
+    }
+
+    @Test
+    public void findAllByMovieIdAndDateTest() {
+        long auditoriumId = 10L;
+        LocalDate date = LocalDate.of(2024, 8, 31);
+        long existedId = 10L;
+        long movieId = 10L;
+        Showtime expectedShowtime = Showtime.builder()
+                .id(existedId)
+                .date(LocalDate.of(2024, 8, 31))
+                .startTime(LocalTime.of(10, 0))
+                .endTime(LocalTime.of(12, 0))
+                .auditoriumId(auditoriumId)
+                .movieId(movieId)
+                .build();
+        assertTrue(showtimeRepository.findAllByAuditoriumIdAndDate(auditoriumId, date).contains(expectedShowtime));
+    }
+
+    @Test
+    public void findAllByDateTest() {
+        long auditoriumId = 10L;
+        LocalDate date = LocalDate.of(2024, 8, 31);
+        long existedId = 10L;
+        long movieId = 10L;
+        Showtime expectedShowtime = Showtime.builder()
+                .id(existedId)
+                .date(LocalDate.of(2024, 8, 31))
+                .startTime(LocalTime.of(10, 0))
+                .endTime(LocalTime.of(12, 0))
+                .auditoriumId(auditoriumId)
+                .movieId(movieId)
+                .build();
+        assertTrue(showtimeRepository.findAllByDate(date).contains(expectedShowtime));
     }
 
     @Test
@@ -72,6 +107,7 @@ public class ShowtimeRepositoryTest {
                 .startTime(LocalTime.of(10, 0))
                 .endTime(LocalTime.of(12, 0))
                 .auditoriumId(10L)
+                .movieId(10L)
                 .build();
         assertEquals(expectedShowtime, showtimeRepository.findById(existedId).orElseThrow(NotFoundException::new));
         assertTrue(showtimeRepository.findById(notExistedId).isEmpty());
@@ -80,11 +116,13 @@ public class ShowtimeRepositoryTest {
     @Test
     public void createTest() {
         long auditoriumId = 10L;
+        long movieId = 10L;
         Showtime expectedShowtime = Showtime.builder()
                 .date(LocalDate.of(2024, 8, 31))
                 .startTime(LocalTime.of(12, 10))
                 .endTime(LocalTime.of(14, 0))
                 .auditoriumId(auditoriumId)
+                .movieId(movieId)
                 .build();
         showtimeRepository.create(expectedShowtime);
         assertEquals(expectedShowtime, jdbcTemplate.queryForObject("SELECT * FROM showtimes WHERE id = ?", new ShowtimeMapper(), expectedShowtime.getId()));
@@ -124,6 +162,7 @@ public class ShowtimeRepositoryTest {
                 .startTime(LocalTime.of(7, 0))
                 .endTime(LocalTime.of(9, 0))
                 .auditoriumId(10L)
+                .movieId(10L)
                 .build();
         assertNotEquals(expectedShowtime, jdbcTemplate.queryForObject("SELECT * FROM showtimes WHERE id = ?", new ShowtimeMapper(), expectedShowtime.getId()));
         showtimeRepository.update(expectedShowtime);

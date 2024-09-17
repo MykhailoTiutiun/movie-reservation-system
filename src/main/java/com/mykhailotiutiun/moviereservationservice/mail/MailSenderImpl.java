@@ -1,4 +1,4 @@
-package com.mykhailotiutiun.moviereservationservice.user.mail;
+package com.mykhailotiutiun.moviereservationservice.mail;
 
 import com.mykhailotiutiun.moviereservationservice.user.domain.MailSender;
 import org.springframework.mail.SimpleMailMessage;

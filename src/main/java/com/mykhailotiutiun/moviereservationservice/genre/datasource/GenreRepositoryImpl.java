@@ -1,9 +1,9 @@
-package com.mykhailotiutiun.moviereservationservice.genres.datasource;
+package com.mykhailotiutiun.moviereservationservice.genre.datasource;
 
 import com.mykhailotiutiun.moviereservationservice.exception.AlreadyExistsException;
 import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
-import com.mykhailotiutiun.moviereservationservice.genres.domain.Genre;
-import com.mykhailotiutiun.moviereservationservice.genres.domain.GenreRepository;
+import com.mykhailotiutiun.moviereservationservice.genre.domain.Genre;
+import com.mykhailotiutiun.moviereservationservice.genre.domain.GenreRepository;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;

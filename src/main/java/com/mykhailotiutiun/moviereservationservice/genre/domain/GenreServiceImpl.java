@@ -1,5 +1,6 @@
-package com.mykhailotiutiun.moviereservationservice.genres.domain;
+package com.mykhailotiutiun.moviereservationservice.genre.domain;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class GenreServiceImpl implements GenreService{
@@ -12,7 +13,11 @@ public class GenreServiceImpl implements GenreService{
 
     @Override
     public List<Genre> getList() {
-        return genreRepository.findAll();
+        List<Genre> genres = genreRepository.findAll();
+        if(genres.size() > 1){
+            genres.sort(Comparator.comparing(Genre::getName));
+        }
+        return genres;
     }
 
     @Override

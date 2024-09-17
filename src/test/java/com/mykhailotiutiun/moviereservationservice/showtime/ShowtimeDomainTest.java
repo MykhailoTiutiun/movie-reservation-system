@@ -1,7 +1,6 @@
 package com.mykhailotiutiun.moviereservationservice.showtime;
 
 import com.mykhailotiutiun.moviereservationservice.exception.NotFoundException;
-import com.mykhailotiutiun.moviereservationservice.movie.domain.Movie;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.Showtime;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.ShowtimeRepository;
 import com.mykhailotiutiun.moviereservationservice.showtime.domain.ShowtimeServiceImpl;
@@ -36,7 +35,7 @@ public class ShowtimeDomainTest {
         long auditoriumId = 2L;
         Showtime showtime = Showtime.builder().id(1L).build();
         when(showtimeRepository.findAllByAuditoriumId(auditoriumId)).thenReturn(List.of(showtime));
-        assertEquals(List.of(showtime), showtimeService.getList(auditoriumId));
+        assertEquals(List.of(showtime), showtimeService.getListByAuditoriumId(auditoriumId));
     }
 
     @Test
@@ -45,7 +44,32 @@ public class ShowtimeDomainTest {
         LocalDate date = LocalDate.of(2024, 9, 8);
         Showtime showtime = Showtime.builder().id(1L).build();
         when(showtimeRepository.findAllByAuditoriumIdAndDate(auditoriumId, date)).thenReturn(List.of(showtime));
-        assertEquals(List.of(showtime), showtimeService.getList(auditoriumId, date));
+        assertEquals(List.of(showtime), showtimeService.getListByAuditoriumId(auditoriumId, date));
+    }
+
+    @Test
+    public void getListByMovieIdTest() {
+        long movieId = 2L;
+        Showtime showtime = Showtime.builder().id(1L).build();
+        when(showtimeRepository.findAllByMovieId(movieId)).thenReturn(List.of(showtime));
+        assertEquals(List.of(showtime), showtimeService.getListByMovieId(movieId));
+    }
+
+    @Test
+    public void getListByMovieIdAndDateTest() {
+        long movieId = 2L;
+        LocalDate date = LocalDate.of(2024, 9, 8);
+        Showtime showtime = Showtime.builder().id(1L).build();
+        when(showtimeRepository.findAllByMovieIdAndDate(movieId, date)).thenReturn(List.of(showtime));
+        assertEquals(List.of(showtime), showtimeService.getListByMovieId(movieId, date));
+    }
+
+    @Test
+    public void getListDateTest() {
+        LocalDate date = LocalDate.of(2024, 9, 8);
+        Showtime showtime = Showtime.builder().id(1L).build();
+        when(showtimeRepository.findAllByDate(date)).thenReturn(List.of(showtime));
+        assertEquals(List.of(showtime), showtimeService.getListByDate(date));
     }
 
     @Test

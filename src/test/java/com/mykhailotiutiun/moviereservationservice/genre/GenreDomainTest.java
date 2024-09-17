@@ -1,8 +1,8 @@
 package com.mykhailotiutiun.moviereservationservice.genre;
 
-import com.mykhailotiutiun.moviereservationservice.genres.domain.Genre;
-import com.mykhailotiutiun.moviereservationservice.genres.domain.GenreRepository;
-import com.mykhailotiutiun.moviereservationservice.genres.domain.GenreServiceImpl;
+import com.mykhailotiutiun.moviereservationservice.genre.domain.Genre;
+import com.mykhailotiutiun.moviereservationservice.genre.domain.GenreRepository;
+import com.mykhailotiutiun.moviereservationservice.genre.domain.GenreServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

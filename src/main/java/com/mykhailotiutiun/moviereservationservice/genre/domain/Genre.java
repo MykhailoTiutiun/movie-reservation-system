@@ -1,4 +1,4 @@
-package com.mykhailotiutiun.moviereservationservice.genres.domain;
+package com.mykhailotiutiun.moviereservationservice.genre.domain;
 
 import java.util.Objects;
 
